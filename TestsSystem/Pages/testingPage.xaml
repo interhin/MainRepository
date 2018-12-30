@@ -1,0 +1,24 @@
+﻿<Page x:Class="TestsSystem.Pages.testingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TestsSystem.Pages"
+      mc:Ignorable="d" 
+      MinWidth="800"
+      MinHeight="350"
+      Style="{StaticResource pageFont}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      Title="Тестирование" Loaded="Page_Loaded">
+    <Grid>
+        <TextBlock x:Name="testNameTB" Style="{StaticResource bigHeaderText}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <StackPanel x:Name="sp" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center" x:Name="questionTB" Margin="0 10 0 0" Style="{StaticResource blueText}" HorizontalAlignment="Stretch"/>
+            <TextBlock x:Name="passTimeTB" Margin="0 10 0 0" Style="{StaticResource blueText}" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="questionTimeTB" Margin="0 10 0 0" Style="{StaticResource blueText}" HorizontalAlignment="Center"/>
+            <ListBox Validation.ErrorTemplate="{x:Null}" BorderBrush="Transparent" x:Name="optionsList" Height="150" Margin="0 10 0 0" SelectedValue="{Binding selectedValueID}" DisplayMemberPath="Text" SelectedValuePath="id" ItemContainerStyle="{StaticResource RadioButtonList}">
+            </ListBox>
+            <Button Style="{StaticResource butStyle}" Content="Ответить" x:Name="nextQuestBut" Click="nextQuestBut_Click" Margin="0 10 0 0"/>
+        </StackPanel>
+    </Grid>
+</Page>
