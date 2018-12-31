@@ -28,10 +28,13 @@ namespace TestsSystem.Pages
 
         private void AuthBut_Click(object sender, RoutedEventArgs e)
         {
+            // Ищем пользователя в БД (Вернет null если такого пользователя нет)
             var user = MainClass.db.Users.Where(x => x.Login == login.Text && x.Password == pass.Password).FirstOrDefault();
             if (user != null)
             {
+                // Если вошли то добавляем пользователя в публичный класс чтобы запомнить какой пользователь вошёл
                 CurrentUser.curUser = user;
+                // Проверяем кто вошел (0 - Админ, 1 - Учитель, 2 - Студент) 
                 if (user.Role == 0)
                 {
                     MainClass.FrameVar.Navigate(new adminPanel());

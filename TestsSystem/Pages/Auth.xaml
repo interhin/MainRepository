@@ -11,12 +11,31 @@
       Style="{StaticResource pageFont}">
 
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="150">
-            <TextBlock Style="{StaticResource blueText}" Text="Логин:" HorizontalAlignment="Center"/>
-            <TextBox Style="{StaticResource blueTextBox}" Text="student" Margin="5" x:Name="login"/>
-            <TextBlock Style="{StaticResource blueText}" Text="Пароль:" HorizontalAlignment="Center"/>
-            <PasswordBox Style="{StaticResource bluePassBox}" Password="123" Margin="5" x:Name="pass"/>
-            <Button Style="{StaticResource butStyle}" Margin="5" Content="Войти" x:Name="AuthBut" Click="AuthBut_Click"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="250" Margin="15">
+            <!-- Логин -->
+            <TextBlock Style="{StaticResource mediumTBlStyle}"
+                       Text="Логин:"
+                       HorizontalAlignment="Center"/>
+            <TextBox Style="{StaticResource blueTextBox}" 
+                     Text="student" 
+                     Margin="5" 
+                     x:Name="login"/>
+            
+            <!-- Пароль -->
+            <TextBlock Style="{StaticResource mediumTBlStyle}"
+                       Text="Пароль:"
+                       HorizontalAlignment="Center"/>
+            <PasswordBox Style="{StaticResource bluePassBox}"
+                         Password="123" 
+                         Margin="5"
+                         x:Name="pass"/>
+            
+            <!-- Вход -->
+            <Button Style="{StaticResource butStyle}"
+                    Margin="5"
+                    Content="Войти" 
+                    x:Name="AuthBut" 
+                    Click="AuthBut_Click"/>
         </StackPanel>
     </Grid>
 </Page>
