@@ -4,10 +4,12 @@
              xmlns:local="clr-namespace:TestsSystem"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!-- Цвета -->
         <SolidColorBrush x:Key="BlueBrush" Color="#1E88E5"/>
         <SolidColorBrush x:Key="BlueInactive" Color="#90CAF9"/>
         <SolidColorBrush x:Key="DarkBlueBrush" Color="#1565C0"/>
 
+        <!-- Button -->
         <Style x:Key="butStyle" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -35,6 +37,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <!-- Buttons Назад / Выход -->
         <Style x:Key="backHomeButs" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
@@ -64,49 +68,53 @@
             </Setter>
         </Style>
 
-        <Style TargetType="TextBlock" x:Key="blueText">
+        <!-- Базовый стиль для всех TextBlock (Цвет и Жирность) -->
+        <Style TargetType="TextBlock" x:Key="baseTBlStyle">
             <Setter Property="Foreground" Value="{StaticResource BlueBrush}"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
-        <Style x:Key="bigHeaderText" BasedOn="{StaticResource blueText}" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20"/>
+        <!-- Маленький TextBlock -->
+        <Style TargetType="TextBlock" x:Key="smallTBlStyle" BasedOn="{StaticResource baseTBlStyle}">
+            <Setter Property="FontSize" Value="12"/>
         </Style>
 
-        <Style x:Key="smallHeaderText" BasedOn="{StaticResource blueText}" TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="10"/>
+        <!-- Средний TextBlock -->
+        <Style TargetType="TextBlock" x:Key="mediumTBlStyle" BasedOn="{StaticResource baseTBlStyle}">
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
+        <!-- Большой TextBlock -->
+        <Style TargetType="TextBlock" x:Key="bigTBlStyle" BasedOn="{StaticResource baseTBlStyle}">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+
+        <!-- Огромный TextBlock -->
+        <Style TargetType="TextBlock" x:Key="hugeTBlStyle" BasedOn="{StaticResource baseTBlStyle}">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+
+        <!-- TextBox -->
         <Style TargetType="TextBox" x:Key="blueTextBox">
             <Setter Property="Foreground" Value="{StaticResource DarkBlueBrush}"/>
             <Setter Property="Padding" Value="0 2"/>
         </Style>
-        
-        <Style TargetType="PasswordBox" x:Key="bluePassBox">
-            <Setter Property="Foreground" Value="{StaticResource BlueBrush}"/>
-            <Setter Property="Padding" Value="0 2"/>
-        </Style>
-        
-        <Style x:Key="textMargin" BasedOn="{StaticResource blueText}" TargetType="TextBlock">
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
 
-        <Style x:Key="timeTextBox" BasedOn="{StaticResource blueTextBox}" TargetType="TextBox">
+        <!-- TextBox для чисел -->
+        <Style x:Key="numTextBox" BasedOn="{StaticResource blueTextBox}" TargetType="TextBox">
             <Setter Property="Width" Value="30"/>
             <Setter Property="Margin" Value="10 0"/>
             <Setter Property="Text" Value="0"/>
             <Setter Property="Padding" Value="0 2"/>
         </Style>
 
-        <Style x:Key="ballStyle" BasedOn="{StaticResource blueText}" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Bold"/>
+        <!-- PasswordBox -->
+        <Style TargetType="PasswordBox" x:Key="bluePassBox">
+            <Setter Property="Foreground" Value="{StaticResource BlueBrush}"/>
             <Setter Property="Padding" Value="0 2"/>
         </Style>
-
+        
+        <!-- ListBox с RadioButton'ами -->
         <Style x:Key="RadioButtonList" TargetType="ListBoxItem">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="5"/>
@@ -135,14 +143,17 @@
             </Setter>
         </Style>
 
+        <!-- Шрифт для страницы -->
         <Style x:Key="pageFont" TargetType="{x:Type Page}">
             <Setter Property="FontFamily" Value="CTC Splash Rounded" />
         </Style>
 
+        <!-- Шрифт для окна -->
         <Style x:Key="windowFont" TargetType="{x:Type Window}">
             <Setter Property="FontFamily" Value="CTC Splash Rounded" />
         </Style>
 
+        <!-- Конвертеры -->
         <local:widthConverter x:Key="widthConverter"/>
         <local:heightConverter x:Key="heightConverter"/>
     </Application.Resources>
