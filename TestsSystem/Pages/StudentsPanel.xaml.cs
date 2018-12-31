@@ -26,23 +26,30 @@ namespace TestsSystem.Pages
             InitializeComponent();
         }
 
-        private void startTest_Click(object sender, RoutedEventArgs e)
+        private void startTestBut_Click(object sender, RoutedEventArgs e)
         {
-            if (testsList.SelectedItem == null)
+            // Если тест не выбран то ничего не делаем
+            if (testsLB.SelectedItem == null)
                 return;
-            MainClass.studentTestingID = Convert.ToInt32(testsList.SelectedValue);
-            MainClass.studentTestingName = (testsList.SelectedItem as Tests).Test_name;
+
+            // Если выбран то сохраняем данные о тесте и переходим на другую страницу
+            MainClass.studentTestingID = Convert.ToInt32(testsLB.SelectedValue);
+            MainClass.studentTestingName = (testsLB.SelectedItem as Tests).Test_name;
             MainClass.FrameVar.Navigate(new testingPage());
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            List<int> passedTests = new List<int>();
-            passedTests = MainClass.db.History.Where(x => x.User_id == CurrentUser.curUser.id).Select(x => x.Test_id).ToList();
-            testsList.DisplayMemberPath = "Test_name";
-            testsList.SelectedValuePath = "id";
-            testsList.ItemsSource = MainClass.db.Tests.Where(x=>!passedTests.Contains(x.id)).ToList();
-            historyGrid.ItemsSource = MainClass.db.History.Where(x => x.User_id == CurrentUser.curUser.id).ToList();
+
+            List<int> passedTestsList = new List<int>();
+            // Находим все тесты которые уже прошел пользователь
+            passedTestsList = MainClass.db.History.Where(x => x.User_id == CurrentUser.curUser.id).Select(x => x.Test_id).ToList();
+            testsLB.DisplayMemberPath = "Test_name";
+            testsLB.SelectedValuePath = "id";
+            // Достаем все тесты из БД исключая тесты из списка passedTestsList
+            testsLB.ItemsSource = MainClass.db.Tests.Where(x=>!passedTestsList.Contains(x.id)).ToList();
+            // Загружаем пройденные тесты в DataGrid
+            historyDG.ItemsSource = MainClass.db.History.Where(x => x.User_id == CurrentUser.curUser.id).ToList();
         }
     }
 }
