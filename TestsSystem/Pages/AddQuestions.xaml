@@ -16,7 +16,6 @@
         </Style>
     </Page.Resources>
     <Grid>
-        Не желаемые изменения
         <StackPanel Width="600">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Style="{StaticResource textMargin}" Text="Название теста:" FontSize="14"/>
