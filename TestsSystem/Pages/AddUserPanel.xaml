@@ -9,35 +9,50 @@
       MinWidth="700"
       Style="{StaticResource pageFont}"
       Title="Добавление пользователя" Loaded="Page_Loaded">
-
+    <Page.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource mediumTBlStyle}" x:Key="customMediumTbl">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
-        
+
+        <!-- Отдельный Grid чтобы расположить горизонтально в 2 столбика -->
         <Grid Margin="45 45 45 0" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
+            
+            <!-- Имя и Логин -->
             <StackPanel>
-                <TextBlock Text="Имя" Style="{StaticResource smallHeaderText}"/>
-                <TextBox x:Name="nameTextBox" Style="{StaticResource blueTextBox}"/>
-                <TextBlock Text="Логин" Style="{StaticResource smallHeaderText}"/>
-                <TextBox x:Name="loginTextBox" Style="{StaticResource blueTextBox}"/>
+                <TextBlock Text="Имя" Style="{StaticResource customMediumTbl}"/>
+                <TextBox x:Name="nameTBox" Style="{StaticResource blueTextBox}"/>
+                <TextBlock Text="Логин" Style="{StaticResource customMediumTbl}"/>
+                <TextBox x:Name="loginTBox" Style="{StaticResource blueTextBox}"/>
             </StackPanel>
+            
+            <!-- Фамилия и Пароль -->
             <StackPanel Grid.Column="2">
-                <TextBlock Text="Фамилия" Style="{StaticResource smallHeaderText}"/>
-                <TextBox x:Name="surnameTextBox" Style="{StaticResource blueTextBox}"/>
-                <TextBlock Text="Пароль" Style="{StaticResource smallHeaderText}"/>
-                <PasswordBox x:Name="passTextBox" Style="{StaticResource bluePassBox}"/>
+                <TextBlock Text="Фамилия" Style="{StaticResource customMediumTbl}"/>
+                <TextBox x:Name="surnameTBox" Style="{StaticResource blueTextBox}"/>
+                <TextBlock Text="Пароль" Style="{StaticResource customMediumTbl}"/>
+                <PasswordBox x:Name="passTBox" Style="{StaticResource bluePassBox}"/>
             </StackPanel>
         </Grid>
+        
         <StackPanel Grid.Row="1" Margin="45 0 45 45">
-            <TextBlock Text="Роль" Style="{StaticResource smallHeaderText}"/>
-            <ComboBox x:Name="roleCombobox"/>
+            
+            <!-- Роль -->
+            <TextBlock Text="Роль" Style="{StaticResource customMediumTbl}"/>
+            <ComboBox x:Name="roleCB"/>
+            
+            <!-- Добавить -->
             <Button Content="Добавить"
                     Height="30"
                     Style="{StaticResource butStyle}" 

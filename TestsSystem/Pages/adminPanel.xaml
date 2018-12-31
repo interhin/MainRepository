@@ -1,4 +1,4 @@
-﻿<Page x:Class="TestsSystem.Pages.adminPanel"
+﻿<Page x:Class="TestsSystem.Pages.AdminPanel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,7 +10,7 @@
       Style="{StaticResource pageFont}"
       Title="Меню администратора" Loaded="Page_Loaded">
     <Page.Resources>
-        <Style x:Key="adminButsStyle" BasedOn="{StaticResource butStyle}" TargetType="Button">
+        <Style x:Key="customButsStyle" BasedOn="{StaticResource butStyle}" TargetType="Button">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Height" Value="30"/>
         </Style>
@@ -20,7 +20,9 @@
             <RowDefinition Height="80*"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-        <DataGrid ColumnWidth="150" Margin="15" AutoGenerateColumns="False" x:Name="usersGrid">
+        
+        <!-- Таблица пользователей -->
+        <DataGrid ColumnWidth="150" Margin="15" AutoGenerateColumns="False" x:Name="usersDG">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
                 <DataGridTextColumn Header="Пароль" Binding="{Binding Password}"/>
@@ -34,18 +36,24 @@
                 <ColumnDefinition Width="0.33*"/>
                 <ColumnDefinition Width="0.33*"/>
             </Grid.ColumnDefinitions>
+            
+            <!-- Добавить -->
             <Button Content="Добавить"
-                    Style="{StaticResource adminButsStyle}"
+                    Style="{StaticResource customButsStyle}"
                     x:Name="addUserBut"
                     Click="addUserBut_Click"/>
+            
+            <!-- Удалить -->
             <Button Grid.Column="1"
                     Content="Удалить"
-                    Style="{StaticResource adminButsStyle}"
+                    Style="{StaticResource customButsStyle}"
                     x:Name="delUserBut"
                     Click="delUserBut_Click"/>
+            
+            <!-- Сохранить изменения -->
             <Button Grid.Column="2"
                     Content="Сохранить изменения"
-                    Style="{StaticResource adminButsStyle}"
+                    Style="{StaticResource customButsStyle}"
                     x:Name="saveBut"
                     Click="saveBut_Click"/>
         </Grid>

@@ -20,7 +20,7 @@ namespace TestsSystem.Pages
     /// <summary>
     /// Interaction logic for testingPage.xaml
     /// </summary>
-    public partial class testingPage : Page
+    public partial class TestingPage : Page
     {
         // Таймеры для теста и вопроса
         DispatcherTimer passTimer = new DispatcherTimer();
@@ -42,7 +42,7 @@ namespace TestsSystem.Pages
         // Список с вопросами
         List<Questions> questionsList = new List<Questions>();
 
-        public testingPage()
+        public TestingPage()
         {
             InitializeComponent();
         }

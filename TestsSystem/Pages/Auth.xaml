@@ -19,7 +19,7 @@
             <TextBox Style="{StaticResource blueTextBox}" 
                      Text="student" 
                      Margin="5" 
-                     x:Name="login"/>
+                     x:Name="loginTBox"/>
             
             <!-- Пароль -->
             <TextBlock Style="{StaticResource mediumTBlStyle}"
@@ -28,7 +28,7 @@
             <PasswordBox Style="{StaticResource bluePassBox}"
                          Password="123" 
                          Margin="5"
-                         x:Name="pass"/>
+                         x:Name="passTBox"/>
             
             <!-- Вход -->
             <Button Style="{StaticResource butStyle}"

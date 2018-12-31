@@ -19,15 +19,16 @@ namespace TestsSystem.Pages
     /// <summary>
     /// Interaction logic for adminPanel.xaml
     /// </summary>
-    public partial class adminPanel : Page
+    public partial class AdminPanel : Page
     {
-        public adminPanel()
+        public AdminPanel()
         {
             InitializeComponent();
         }
 
         private void addUserBut_Click(object sender, RoutedEventArgs e)
         {
+            // Переходим на окно добавления пользователя
             MainClass.FrameVar.Navigate(new AddUserPanel());
         }
 
@@ -35,24 +36,26 @@ namespace TestsSystem.Pages
         {
             if (MessageBox.Show("Вы уверены что хотите удалить эту запись?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                if ((usersGrid.SelectedItem as Users)!=null)
+                // Проверяем выбран ли какой-либо пользователь из списка
+                if ((usersDG.SelectedItem as Users)!=null)
                 {
-                    MainClass.db.Users.Remove((usersGrid.SelectedItem as Users));
+                    MainClass.db.Users.Remove((usersDG.SelectedItem as Users));
                     MainClass.db.SaveChanges();
-                    usersGrid.ItemsSource = MainClass.db.Users.ToList();
+                    usersDG.ItemsSource = MainClass.db.Users.ToList(); // Обновляем таблицу
                 }
             }
         }
 
         private void saveBut_Click(object sender, RoutedEventArgs e)
         {
+            // Сохраняем изменения
             MainClass.db.SaveChanges();
             MessageBox.Show("Изменения успешно сохранены","Информация",MessageBoxButton.OK,MessageBoxImage.Information);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            usersGrid.ItemsSource = MainClass.db.Users.ToList();
+            usersDG.ItemsSource = MainClass.db.Users.ToList(); // Загружаем пользователей в таблицу
         }
     }
 }

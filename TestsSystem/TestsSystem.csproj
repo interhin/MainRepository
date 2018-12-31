@@ -92,8 +92,8 @@
     <Compile Include="Pages\AddUserPanel.xaml.cs">
       <DependentUpon>AddUserPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\adminPanel.xaml.cs">
-      <DependentUpon>adminPanel.xaml</DependentUpon>
+    <Compile Include="Pages\AdminPanel.xaml.cs">
+      <DependentUpon>AdminPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CreateTest.xaml.cs">
       <DependentUpon>CreateTest.xaml</DependentUpon>
@@ -104,8 +104,8 @@
     <Compile Include="Pages\StudentsPanel.xaml.cs">
       <DependentUpon>StudentsPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\testingPage.xaml.cs">
-      <DependentUpon>testingPage.xaml</DependentUpon>
+    <Compile Include="Pages\TestingPage.xaml.cs">
+      <DependentUpon>TestingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Questions.cs">
       <DependentUpon>TestsModelAzure.tt</DependentUpon>
@@ -155,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\adminPanel.xaml">
+    <Page Include="Pages\AdminPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,7 +179,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\testingPage.xaml">
+    <Page Include="Pages\TestingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

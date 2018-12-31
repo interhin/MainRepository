@@ -35,23 +35,25 @@ namespace TestsSystem.Pages
 
         private void addUserBut_Click(object sender, RoutedEventArgs e)
         {
-            if (loginTextBox.Text != "" && passTextBox.Password != "" && nameTextBox.Text != "" && surnameTextBox.Text != "")
+            // Проверяем пустые ли поля
+            if (loginTBox.Text != "" && passTBox.Password != "" && nameTBox.Text != "" && surnameTBox.Text != "")
             {
-                var sameUser = MainClass.db.Users.Where(x => x.Login == loginTextBox.Text).FirstOrDefault();
+                // Проверяем зарегистрирован ли уже пользователь с таким логином
+                var sameUser = MainClass.db.Users.Where(x => x.Login == loginTBox.Text).FirstOrDefault();
                 if (sameUser == null)
                 {
                     Users user = new Users()
                     {
-                        Login = loginTextBox.Text,
-                        Password = passTextBox.Password,
-                        Name = nameTextBox.Text,
-                        Surname = surnameTextBox.Text,
-                        Role = Convert.ToInt32(roleCombobox.SelectedValue)
+                        Login = loginTBox.Text,
+                        Password = passTBox.Password,
+                        Name = nameTBox.Text,
+                        Surname = surnameTBox.Text,
+                        Role = Convert.ToInt32(roleCB.SelectedValue)
                     };
                     MainClass.db.Users.Add(user);
                     MainClass.db.SaveChanges();
                     MessageBox.Show("Пользователь успешно добавлен!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                    MainClass.FrameVar.Navigate(new adminPanel());
+                    MainClass.FrameVar.Navigate(new AdminPanel());
                 }
                 else
                     MessageBox.Show("Пользователь с таким логином уже существует!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -62,14 +64,15 @@ namespace TestsSystem.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // Загрузка списка ролей
             List<Role> roles = new List<Role>();
             roles.Add(new Role() {RoleID = 0,RoleName = "Администратор" });
             roles.Add(new Role() { RoleID = 1, RoleName = "Учитель" });
             roles.Add(new Role() { RoleID = 2, RoleName = "Студент" });
-            roleCombobox.DisplayMemberPath = "RoleName";
-            roleCombobox.SelectedValuePath = "RoleID";
-            roleCombobox.ItemsSource = roles;
-            roleCombobox.SelectedIndex = 0;
+            roleCB.DisplayMemberPath = "RoleName";
+            roleCB.SelectedValuePath = "RoleID";
+            roleCB.ItemsSource = roles;
+            roleCB.SelectedIndex = 0;
         }
     }
 }
