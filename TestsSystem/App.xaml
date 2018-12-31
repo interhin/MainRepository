@@ -21,7 +21,10 @@
                             CornerRadius="5"
                             Padding="0 4"
                             Background="{StaticResource BlueBrush}">
-                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.Foreground="White"/>
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center" 
+                                              TextBlock.Foreground="White"
+                                              TextBlock.FontSize="14"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -98,6 +101,7 @@
         <Style TargetType="TextBox" x:Key="blueTextBox">
             <Setter Property="Foreground" Value="{StaticResource DarkBlueBrush}"/>
             <Setter Property="Padding" Value="0 2"/>
+            <Setter Property="TextBlock.FontSize" Value="14"/>
         </Style>
 
         <!-- TextBox для чисел -->
@@ -112,6 +116,7 @@
         <Style TargetType="PasswordBox" x:Key="bluePassBox">
             <Setter Property="Foreground" Value="{StaticResource BlueBrush}"/>
             <Setter Property="Padding" Value="0 2"/>
+            <Setter Property="TextBlock.FontSize" Value="14"/>
         </Style>
         
         <!-- ListBox с RadioButton'ами -->
@@ -125,9 +130,12 @@
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <Border x:Name="brd" Background="{TemplateBinding Background}" 
                                           BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <RadioButton Focusable="False" Margin="{TemplateBinding Padding}" Foreground="{TemplateBinding Foreground}"
-                                                          IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}">
-                                <ContentPresenter/>
+                            <RadioButton VerticalContentAlignment="Center"
+                                         Focusable="False" 
+                                         Margin="{TemplateBinding Padding}" 
+                                         Foreground="{TemplateBinding Foreground}"
+                                         IsChecked="{Binding Path=IsSelected, RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}">
+                                <ContentPresenter />
                             </RadioButton>
                         </Border>
                         <ControlTemplate.Triggers>

@@ -35,7 +35,7 @@ namespace TestsSystem.Pages
         private void editTestBut_Click(object sender, RoutedEventArgs e)
         {
             MainClass.editingTest = true;
-            MainClass.editingTestId = Convert.ToInt32(testsGB.SelectedValue);
+            MainClass.editingTestID = Convert.ToInt32(testsGB.SelectedValue);
             MainClass.FrameVar.Navigate(new CreateTest());
         }
 
@@ -57,7 +57,7 @@ namespace TestsSystem.Pages
 
         private void editTestsQuestions_Click(object sender, RoutedEventArgs e)
         {
-            MainClass.editingTestId = Convert.ToInt32(testsGB.SelectedValue);
+            MainClass.editingTestID = Convert.ToInt32(testsGB.SelectedValue);
             MainClass.FrameVar.Navigate(new EditTestsQuestionsPage());
         }
     }

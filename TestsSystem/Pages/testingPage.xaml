@@ -10,15 +10,51 @@
       Style="{StaticResource pageFont}"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       Title="Тестирование" Loaded="Page_Loaded">
+
     <Grid>
-        <TextBlock x:Name="testNameTB" Style="{StaticResource bigHeaderText}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <StackPanel x:Name="sp" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock TextWrapping="Wrap" TextAlignment="Center" x:Name="questionTB" Margin="0 10 0 0" Style="{StaticResource blueText}" HorizontalAlignment="Stretch"/>
-            <TextBlock x:Name="passTimeTB" Margin="0 10 0 0" Style="{StaticResource blueText}" HorizontalAlignment="Center"/>
-            <TextBlock x:Name="questionTimeTB" Margin="0 10 0 0" Style="{StaticResource blueText}" HorizontalAlignment="Center"/>
-            <ListBox Validation.ErrorTemplate="{x:Null}" BorderBrush="Transparent" x:Name="optionsList" Height="150" Margin="0 10 0 0" SelectedValue="{Binding selectedValueID}" DisplayMemberPath="Text" SelectedValuePath="id" ItemContainerStyle="{StaticResource RadioButtonList}">
+        <!-- Название теста -->
+        <TextBlock x:Name="testNameTBl" Style="{StaticResource hugeTBlStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        
+        <StackPanel x:Name="sp" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="15">
+            
+            <!-- Вопрос -->
+            <TextBlock TextWrapping="Wrap"
+                       TextAlignment="Center"
+                       x:Name="questionTBl"
+                       Margin="0 10 0 0"
+                       Style="{StaticResource bigTBlStyle}" 
+                       HorizontalAlignment="Stretch"/>
+            
+            <!-- Время на весь тест -->
+            <TextBlock x:Name="passTimeTBl" 
+                       Margin="0 10 0 0" 
+                       Style="{StaticResource mediumTBlStyle}" 
+                       HorizontalAlignment="Center"/>
+            
+            <!-- Время на вопрос -->
+            <TextBlock x:Name="questionTimeTBl"
+                       Margin="0 10 0 0"
+                       Style="{StaticResource mediumTBlStyle}" 
+                       HorizontalAlignment="Center"/>
+            
+            <!-- Варианты ответа (список) -->
+            <ListBox Validation.ErrorTemplate="{x:Null}"
+                     BorderBrush="Transparent" 
+                     x:Name="optionsLB"
+                     MaxHeight="150" 
+                     Margin="0 10 0 0" 
+                     SelectedValue="{Binding selectedValueID}" 
+                     DisplayMemberPath="Text" 
+                     SelectedValuePath="id" 
+                     ItemContainerStyle="{StaticResource RadioButtonList}">
             </ListBox>
-            <Button Style="{StaticResource butStyle}" Content="Ответить" x:Name="nextQuestBut" Click="nextQuestBut_Click" Margin="0 10 0 0"/>
+            
+            <!-- Ответить -->
+            <Button Style="{StaticResource butStyle}"
+                    Content="Ответить"
+                    x:Name="nextQuestBut"
+                    Click="nextQuestBut_Click"
+                    Margin="0 10 0 0"/>
         </StackPanel>
     </Grid>
 </Page>

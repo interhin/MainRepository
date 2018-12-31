@@ -22,22 +22,26 @@ namespace TestsSystem.Pages
     /// </summary>
     public partial class testingPage : Page
     {
+        // Таймеры для теста и вопроса
         DispatcherTimer passTimer = new DispatcherTimer();
         DispatcherTimer questionTimer = new DispatcherTimer();
-        int currentQuestionID = -1;
+
+        // Счетчики и переменные теста
+        int currentQuestionNum = -1; // Счетчик текущего вопроса (начиная с 0)
         int passTime = 0;
         int questionTime = 0;
-        int questionTimeVar = 0;
         int numToFive = 0;
         int numToFour = 0;
         int numToThree = 0;
         int totalBalls = 0;
         int answerID = 0;
 
+        // Выбранный вариант ответа
         public int selectedValueID { get; set; }
 
+        // Список с вопросами
         List<Questions> questionsList = new List<Questions>();
-        List<Options> options = new List<Options>();
+
         public testingPage()
         {
             InitializeComponent();
@@ -45,11 +49,14 @@ namespace TestsSystem.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            testNameTB.Text = MainClass.studentTestingName;
+            // Вывод в заголовок имя теста
+            testNameTBl.Text = MainClass.testingTestName;
 
+            // Загрузка переменных и вопроса
             loadQuestionF();
             loadVars();
 
+            // Подписка на события и настройка интервалов (1 секунда)
             passTimer.Tick += PassTimer_Tick;
             questionTimer.Tick += QuestionTimer_Tick;
             passTimer.Interval = new TimeSpan(0,0,1);
@@ -58,13 +65,14 @@ namespace TestsSystem.Pages
 
         private void QuestionTimer_Tick(object sender, EventArgs e)
         {
+            // Таймер вопроса
             questionTime--;
             if (questionTime != 0)
             {
-                questionTimeTB.Text = String.Format("Времени на тест: {0} часов {1} минут {2} секунд",
-                    (questionTime / 3600),
-                    ((questionTime % 3600) / 60),
-                    ((questionTime % 3600) % 60));
+                questionTimeTBl.Text = String.Format("Времени на тест: {0} часов {1} минут {2} секунд",
+                    (questionTime / 3600), // Часы
+                    ((questionTime % 3600) / 60), // Минуты
+                    ((questionTime % 3600) % 60)); // Секунды
             }
             else
             {
@@ -74,10 +82,11 @@ namespace TestsSystem.Pages
 
         private void PassTimer_Tick(object sender, EventArgs e)
         {
+            // Таймер теста
             passTime--;
             if (passTime != 0)
             {
-                passTimeTB.Text = String.Format("Времени на вопрос: {0} часов {1} минут {2} секунд",
+                passTimeTBl.Text = String.Format("Времени на вопрос: {0} часов {1} минут {2} секунд",
                     (passTime / 3600),
                     ((passTime % 3600) / 60),
                     ((passTime % 3600) % 60));
@@ -90,26 +99,29 @@ namespace TestsSystem.Pages
 
         void loadQuestionF()
         {
-            currentQuestionID++;
-            questionTime = questionTimeVar;
-            questionsList = MainClass.db.Questions.Where(x => x.Test_id == MainClass.studentTestingID).ToList();
-            if (currentQuestionID > questionsList.Count)
+            currentQuestionNum++; // Увеличиваем счетчик чтобы загрузить следующий вопрос
+
+            // Загружаем вопросы текущего теста
+            questionsList = MainClass.db.Questions.Where(x => x.Test_id == MainClass.testingTestID).ToList();
+
+            // Если кто-либо нажмет Назад после прохождения теста
+            if (currentQuestionNum > questionsList.Count)
             {
                 MessageBox.Show("Тебе сюда нельзя!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 MainClass.FrameVar.Navigate(new StudentsPanel());
             }
             else
             {
-                if (currentQuestionID != questionsList.Count)
+                if (currentQuestionNum != questionsList.Count) // Смотрим не вышли ли мы за пределы массива
                 {
-                    var qID = questionsList[currentQuestionID].id;
-                    questionTB.Text = questionsList[currentQuestionID].Question;
-                    answerID = questionsList[currentQuestionID].Answer_id ?? 0;
-                    options = MainClass.db.Options.Where(x => x.QuestionID == qID).ToList();
-                    optionsList.ItemsSource = options;
+                    var currentQuestionID = questionsList[currentQuestionNum].id; // Узнаем ID вопроса чтобы найти его варианты ответа
+                    questionTBl.Text = questionsList[currentQuestionNum].Question; // Сам вопрос
+                    answerID = questionsList[currentQuestionNum].Answer_id ?? 0; // Запоминаем ID правильного ответа
+                    optionsLB.ItemsSource = MainClass.db.Options.Where(x => x.QuestionID == currentQuestionID).ToList(); // Грузим список в ListBox
                 }
                 else
                 {
+                    // Если вышли за пределы массива то считаем оценку и пишем результаты в БД
                     endTest();
                     int ball = 0;
                     if (totalBalls >= numToFive)
@@ -123,7 +135,7 @@ namespace TestsSystem.Pages
 
                     History history = new History() {
                         User_id = CurrentUser.curUser.id,
-                        Test_id = MainClass.studentTestingID,
+                        Test_id = MainClass.testingTestID,
                         Date = DateTime.Now,
                         Ball = ball
                     };
@@ -137,10 +149,10 @@ namespace TestsSystem.Pages
 
         void loadVars()
         {
-            var _test = MainClass.db.Tests.Where(x => x.id == MainClass.studentTestingID).First();
-            questionTimeVar = (int)_test.Question_time;
+            // Загружаем данные о тесте
+            var _test = MainClass.db.Tests.Where(x => x.id == MainClass.testingTestID).First();
+            questionTime = (int)_test.Question_time;
             passTime = (int)_test.Pass_time;
-            questionTime = questionTimeVar;
 
             passTimer.Start();
             questionTimer.Start();
@@ -153,13 +165,13 @@ namespace TestsSystem.Pages
         void endTest()
         {
             questionsList = null;
-            options = null;
             passTimer.Stop();
             questionTimer.Stop();
         }
 
         private void nextQuestBut_Click(object sender, RoutedEventArgs e)
         {
+            // Если ответ верный прибавляем баллы
             if (selectedValueID == answerID)
                 totalBalls++;
             loadQuestionF();

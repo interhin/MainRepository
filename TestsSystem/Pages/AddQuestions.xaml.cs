@@ -56,7 +56,7 @@ namespace TestsSystem.Pages
                 {
                     Question = questionNameText.Text,
                     Answer_id = null,
-                    Test_id = MainClass.addedTestId
+                    Test_id = MainClass.addedTestID
 
                 };
                 MainClass.db.Questions.Add(question);

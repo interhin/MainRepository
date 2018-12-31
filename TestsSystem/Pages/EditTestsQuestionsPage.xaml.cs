@@ -60,7 +60,7 @@ namespace TestsSystem.Pages
             {
                 Question = questionTextBox.Text,
                 Answer_id = null,
-                Test_id = MainClass.editingTestId
+                Test_id = MainClass.editingTestID
             };
             MainClass.db.Questions.Add(questionVar);
             MainClass.db.SaveChanges();
@@ -84,7 +84,7 @@ namespace TestsSystem.Pages
         {
             questionsList.DisplayMemberPath = "Question";
             questionsList.SelectedValuePath = "id";
-            questionsList.ItemsSource = MainClass.db.Questions.Where(x => x.Test_id == MainClass.editingTestId).ToList();
+            questionsList.ItemsSource = MainClass.db.Questions.Where(x => x.Test_id == MainClass.editingTestID).ToList();
         }
 
         void loadSelQuestOptions()

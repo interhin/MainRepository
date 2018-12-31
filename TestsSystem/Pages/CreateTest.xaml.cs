@@ -44,7 +44,7 @@ namespace TestsSystem.Pages
         {
             if (MainClass.editingTest)
             {
-                var test = MainClass.db.Tests.Where(x => x.id == MainClass.editingTestId).First();
+                var test = MainClass.db.Tests.Where(x => x.id == MainClass.editingTestID).First();
                 testName.Text = test.Test_name;
                 timeToPassHours.Text = (test.Pass_time / 3600).ToString();
                 timeToPassMinutes.Text = ((test.Pass_time % 3600) / 60).ToString();
@@ -76,7 +76,7 @@ namespace TestsSystem.Pages
                     (numToPassFive.Text != "0" && numToPassFour.Text != "0" && numToPassThree.Text != "0")
                     )
             {
-                var updTest = MainClass.db.Tests.Where(x => x.id == MainClass.editingTestId).First();
+                var updTest = MainClass.db.Tests.Where(x => x.id == MainClass.editingTestID).First();
                 updTest.Author_id = CurrentUser.curUser.id;
                 updTest.Test_name = testName.Text;
                 updTest.Pass_time = Convert.ToInt32(timeToPassHours.Text) * 3600 + Convert.ToInt32(timeToPassMinutes.Text) * 60 + Convert.ToInt32(timeToPassSeconds.Text);
@@ -114,7 +114,7 @@ namespace TestsSystem.Pages
                 MainClass.db.Tests.Add(test);
                 MainClass.db.SaveChanges();
                 var addedTestVar = MainClass.db.Tests.Where(x => x.Test_name == testName.Text).First();
-                MainClass.addedTestId = addedTestVar.id;
+                MainClass.addedTestID = addedTestVar.id;
                 MainClass.addedTestName = testName.Text;
                 MainClass.FrameVar.Navigate(new AddQuestions());
             }

@@ -33,8 +33,8 @@ namespace TestsSystem.Pages
                 return;
 
             // Если выбран то сохраняем данные о тесте и переходим на другую страницу
-            MainClass.studentTestingID = Convert.ToInt32(testsLB.SelectedValue);
-            MainClass.studentTestingName = (testsLB.SelectedItem as Tests).Test_name;
+            MainClass.testingTestID = Convert.ToInt32(testsLB.SelectedValue);
+            MainClass.testingTestName = (testsLB.SelectedItem as Tests).Test_name;
             MainClass.FrameVar.Navigate(new testingPage());
         }
 
