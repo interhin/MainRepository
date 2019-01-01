@@ -19,9 +19,9 @@ namespace TestsSystem.Pages
     /// <summary>
     /// Interaction logic for Auth.xaml
     /// </summary>
-    public partial class Auth : Page
+    public partial class AuthPage : Page
     {
-        public Auth()
+        public AuthPage()
         {
             InitializeComponent();
         }
@@ -37,13 +37,13 @@ namespace TestsSystem.Pages
                 // Проверяем кто вошел (0 - Админ, 1 - Учитель, 2 - Студент) 
                 if (user.Role == 0)
                 {
-                    MainClass.FrameVar.Navigate(new AdminPanel());
+                    MainClass.FrameVar.Navigate(new AdminsMenuPage());
                 } else if (user.Role == 1)
                 {
-                    MainClass.FrameVar.Navigate(new MenuPanel());
+                    MainClass.FrameVar.Navigate(new TeachersMenuPage());
                 } else if (user.Role == 2)
                 {
-                    MainClass.FrameVar.Navigate(new StudentsPanel());
+                    MainClass.FrameVar.Navigate(new StudentsMenuPage());
                 }
             }
             else

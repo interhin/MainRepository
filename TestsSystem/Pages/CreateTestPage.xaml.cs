@@ -19,9 +19,9 @@ namespace TestsSystem.Pages
     /// <summary>
     /// Interaction logic for CreateTest.xaml
     /// </summary>
-    public partial class CreateTest : Page
+    public partial class CreateTestPage : Page
     {
-        public CreateTest()
+        public CreateTestPage()
         {
             InitializeComponent();
         }
@@ -87,7 +87,7 @@ namespace TestsSystem.Pages
                 MainClass.db.SaveChanges();
                 MainClass.editingTest = false;
                 MessageBox.Show("Информация о тесте успешно обновлена!","Информация",MessageBoxButton.OK,MessageBoxImage.Information);
-                MainClass.FrameVar.Navigate(new MenuPanel());
+                MainClass.FrameVar.Navigate(new TeachersMenuPage());
             }
             else
                 MessageBox.Show("Заполните все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -116,7 +116,7 @@ namespace TestsSystem.Pages
                 var addedTestVar = MainClass.db.Tests.Where(x => x.Test_name == testName.Text).First();
                 MainClass.addedTestID = addedTestVar.id;
                 MainClass.addedTestName = testName.Text;
-                MainClass.FrameVar.Navigate(new AddQuestions());
+                MainClass.FrameVar.Navigate(new AddQuestionsPage());
             }
             else
                 MessageBox.Show("Заполните все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);

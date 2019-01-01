@@ -19,9 +19,9 @@ namespace TestsSystem.Pages
     /// <summary>
     /// Interaction logic for adminPanel.xaml
     /// </summary>
-    public partial class AdminPanel : Page
+    public partial class AdminsMenuPage : Page
     {
-        public AdminPanel()
+        public AdminsMenuPage()
         {
             InitializeComponent();
         }
@@ -29,7 +29,7 @@ namespace TestsSystem.Pages
         private void addUserBut_Click(object sender, RoutedEventArgs e)
         {
             // Переходим на окно добавления пользователя
-            MainClass.FrameVar.Navigate(new AddUserPanel());
+            MainClass.FrameVar.Navigate(new AddUserPage());
         }
 
         private void delUserBut_Click(object sender, RoutedEventArgs e)

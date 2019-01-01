@@ -19,42 +19,48 @@ namespace TestsSystem.Pages
     /// <summary>
     /// Interaction logic for AddQuestions.xaml
     /// </summary>
-    public partial class AddQuestions : Page
+    public partial class AddQuestionsPage : Page
     {
         string unselectedText = "Не выбран";
-        public AddQuestions()
+
+        public AddQuestionsPage()
         {
             InitializeComponent();
         }
 
         private void addOptionBut_Click(object sender, RoutedEventArgs e)
         {
-            optionsList.Items.Add(optionName.Text);
+            // Добавляем вариант ответа в список
+            optionsLB.Items.Add(optionNameTBox.Text);
         }
 
         private void delOptionBut_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Вы уверены что хотите удалить этот вариант?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                if (optionsList.SelectedItem.ToString() == correctAnswerText.Text)
-                    correctAnswerText.Text = unselectedText;
-                optionsList.Items.Remove(optionsList.SelectedItem);
+                // Если удаляем вариант который был правильным ответом то меняем статус на "Не выбрано"
+                if (optionsLB.SelectedItem.ToString() == correctAnswerTBl.Text)
+                    correctAnswerTBl.Text = unselectedText;
+                // Если нет то просто удаляем и отключает кнопки
+                optionsLB.Items.Remove(optionsLB.SelectedItem);
                 turnOffButtons();
             }
         }
 
         private void correctAnswerBut_Click(object sender, RoutedEventArgs e)
         {
-            correctAnswerText.Text = optionsList.SelectedItem.ToString();
+            // Меняем правильный ответ
+            correctAnswerTBl.Text = optionsLB.SelectedItem.ToString();
         }
 
-        private void addQuestion_Click(object sender, RoutedEventArgs e)
+        private void addQuestionBut_Click(object sender, RoutedEventArgs e)
         {
-            if (questionNameText.Text != "" && optionsList.Items != null && correctAnswerText.Text != unselectedText)
+            // Если все поля заполнены то добавляем вопрос
+            if (questionTBox.Text != "" && optionsLB.Items != null && correctAnswerTBl.Text != unselectedText)
             {
                 Questions question = new Questions()
                 {
-                    Question = questionNameText.Text,
+                    Question = questionTBox.Text,
                     Answer_id = null,
                     Test_id = MainClass.addedTestID
 
@@ -62,7 +68,8 @@ namespace TestsSystem.Pages
                 MainClass.db.Questions.Add(question);
                 MainClass.db.SaveChanges();
 
-                foreach (var item in optionsList.Items)
+                // Добавляем варианты ответа в соответствующую таблицу
+                foreach (var item in optionsLB.Items)
                 {
                     Options option = new Options() {
                         Text = item.ToString(),
@@ -76,15 +83,15 @@ namespace TestsSystem.Pages
                 }
                 if (MessageBox.Show("Вопрос успешно добавлен \n Вы желаете добавить еще вопрос?", "Информация", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
-
-                    optionsList.Items.Clear();
-                    questionNameText.Text = "";
-                    correctAnswerText.Text = unselectedText;
-                    optionName.Text = "";
+                    // Очищаем все поля и отключаем кнопки
+                    optionsLB.Items.Clear();
+                    questionTBox.Text = "";
+                    correctAnswerTBl.Text = unselectedText;
+                    optionNameTBox.Text = "";
                     turnOffButtons();
                 }
                 else
-                    MainClass.FrameVar.Navigate(new MenuPanel());
+                    MainClass.FrameVar.Navigate(new TeachersMenuPage());  // Возвращаемся в меню
 
             }
             else
@@ -94,12 +101,12 @@ namespace TestsSystem.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            testNameHeader.Text = MainClass.addedTestName;
+            testNameTBl.Text = MainClass.addedTestName; // Выводим имя теста к которому добавляем вопросы
         }
 
-        private void exitToMenu_Click(object sender, RoutedEventArgs e)
+        private void exitToMenuBut_Click(object sender, RoutedEventArgs e)
         {
-            MainClass.FrameVar.Navigate(new MenuPanel());
+            MainClass.FrameVar.Navigate(new TeachersMenuPage());
         }
 
         void turnOffButtons()
@@ -114,7 +121,7 @@ namespace TestsSystem.Pages
             correctAnswerBut.IsEnabled = true;
         }
 
-        private void optionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void optionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             turnOnButtons();
         }

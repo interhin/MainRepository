@@ -26,9 +26,9 @@ namespace TestsSystem.Pages
         public string RoleName { get; set; }
     }
 
-    public partial class AddUserPanel : Page
+    public partial class AddUserPage : Page
     {
-        public AddUserPanel()
+        public AddUserPage()
         {
             InitializeComponent();
         }
@@ -53,7 +53,7 @@ namespace TestsSystem.Pages
                     MainClass.db.Users.Add(user);
                     MainClass.db.SaveChanges();
                     MessageBox.Show("Пользователь успешно добавлен!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                    MainClass.FrameVar.Navigate(new AdminPanel());
+                    MainClass.FrameVar.Navigate(new AdminsMenuPage());
                 }
                 else
                     MessageBox.Show("Пользователь с таким логином уже существует!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -19,9 +19,9 @@ namespace TestsSystem.Pages
     /// <summary>
     /// Interaction logic for StudentsPanel.xaml
     /// </summary>
-    public partial class StudentsPanel : Page
+    public partial class StudentsMenuPage : Page
     {
-        public StudentsPanel()
+        public StudentsMenuPage()
         {
             InitializeComponent();
         }

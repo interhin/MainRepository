@@ -34,13 +34,13 @@ namespace TestsSystem
         private void frame_Navigated(object sender, NavigationEventArgs e)
         {
             backBut.IsEnabled = frame.CanGoBack;
-            homeBut.IsEnabled = !(frame.Content is Pages.Auth);
+            homeBut.IsEnabled = !(frame.Content is Pages.AuthPage);
 
         }
 
         private void homeBut_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new Auth());
+            frame.Navigate(new AuthPage());
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -58,7 +58,7 @@ namespace TestsSystem
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             MainClass.FrameVar = frame;
-            MainClass.FrameVar.Navigate(new Auth());
+            MainClass.FrameVar.Navigate(new AuthPage());
         }
     }
 }

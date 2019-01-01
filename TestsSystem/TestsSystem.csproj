@@ -86,23 +86,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TestsModelAzure.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddQuestions.xaml.cs">
-      <DependentUpon>AddQuestions.xaml</DependentUpon>
+    <Compile Include="Pages\AddQuestionsPage.xaml.cs">
+      <DependentUpon>AddQuestionsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddUserPanel.xaml.cs">
-      <DependentUpon>AddUserPanel.xaml</DependentUpon>
+    <Compile Include="Pages\AddUserPage.xaml.cs">
+      <DependentUpon>AddUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AdminPanel.xaml.cs">
-      <DependentUpon>AdminPanel.xaml</DependentUpon>
+    <Compile Include="Pages\AdminsMenuPage.xaml.cs">
+      <DependentUpon>AdminsMenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CreateTest.xaml.cs">
-      <DependentUpon>CreateTest.xaml</DependentUpon>
+    <Compile Include="Pages\CreateTestPage.xaml.cs">
+      <DependentUpon>CreateTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\EditTestsQuestionsPage.xaml.cs">
       <DependentUpon>EditTestsQuestionsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\StudentsPanel.xaml.cs">
-      <DependentUpon>StudentsPanel.xaml</DependentUpon>
+    <Compile Include="Pages\StudentsMenuPage.xaml.cs">
+      <DependentUpon>StudentsMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TestingPage.xaml.cs">
       <DependentUpon>TestingPage.xaml</DependentUpon>
@@ -147,23 +147,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\AddQuestions.xaml">
+    <Page Include="Pages\AddQuestionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddUserPanel.xaml">
+    <Page Include="Pages\AddUserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AdminPanel.xaml">
+    <Page Include="Pages\AdminsMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Auth.xaml">
+    <Page Include="Pages\AuthPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\CreateTest.xaml">
+    <Page Include="Pages\CreateTestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,11 +171,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MenuPanel.xaml">
+    <Page Include="Pages\TeachersMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\StudentsPanel.xaml">
+    <Page Include="Pages\StudentsMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,11 +186,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\MainClass.cs" />
-    <Compile Include="Pages\Auth.xaml.cs">
-      <DependentUpon>Auth.xaml</DependentUpon>
+    <Compile Include="Pages\AuthPage.xaml.cs">
+      <DependentUpon>AuthPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MenuPanel.xaml.cs">
-      <DependentUpon>MenuPanel.xaml</DependentUpon>
+    <Compile Include="Pages\TeachersMenuPage.xaml.cs">
+      <DependentUpon>TeachersMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

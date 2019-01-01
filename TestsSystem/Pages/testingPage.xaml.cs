@@ -108,7 +108,7 @@ namespace TestsSystem.Pages
             if (currentQuestionNum > questionsList.Count)
             {
                 MessageBox.Show("Тебе сюда нельзя!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                MainClass.FrameVar.Navigate(new StudentsPanel());
+                MainClass.FrameVar.Navigate(new StudentsMenuPage());
             }
             else
             {
@@ -142,7 +142,7 @@ namespace TestsSystem.Pages
                     MainClass.db.History.Add(history);
                     MainClass.db.SaveChanges();
                     MessageBox.Show(String.Format("Тест окончен, правильных ответов: {0}, ваша оценка за тест: {1}", totalBalls, ball), "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                    MainClass.FrameVar.Navigate(new StudentsPanel());
+                    MainClass.FrameVar.Navigate(new StudentsMenuPage());
                 }
             }
         }

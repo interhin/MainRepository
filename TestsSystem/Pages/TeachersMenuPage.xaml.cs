@@ -19,9 +19,9 @@ namespace TestsSystem.Pages
     /// <summary>
     /// Interaction logic for MenuPanel.xaml
     /// </summary>
-    public partial class MenuPanel : Page
+    public partial class TeachersMenuPage : Page
     {
-        public MenuPanel()
+        public TeachersMenuPage()
         {
             InitializeComponent();
         }
@@ -29,14 +29,14 @@ namespace TestsSystem.Pages
         private void createTestBut_Click(object sender, RoutedEventArgs e)
         {
             MainClass.editingTest = false;
-            MainClass.FrameVar.Navigate(new CreateTest());
+            MainClass.FrameVar.Navigate(new CreateTestPage());
         }
 
         private void editTestBut_Click(object sender, RoutedEventArgs e)
         {
             MainClass.editingTest = true;
             MainClass.editingTestID = Convert.ToInt32(testsGB.SelectedValue);
-            MainClass.FrameVar.Navigate(new CreateTest());
+            MainClass.FrameVar.Navigate(new CreateTestPage());
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
