@@ -11,11 +11,32 @@
       Title="Меню" Loaded="Page_Loaded">
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="15">
-            <ComboBox x:Name="testsGB" Margin="5" SelectionChanged="testsGB_SelectionChanged"/>
+            
+            <!-- Список тестов -->
+            <ComboBox x:Name="testsCB" Margin="5" SelectionChanged="testsCB_SelectionChanged"/>
 
-            <Button Style="{StaticResource butStyle}" x:Name="editTestBut" Margin="5" Click="editTestBut_Click" Content="Изменить настройки теста" IsEnabled="False"/>
-            <Button Style="{StaticResource butStyle}" x:Name="editTestsQuestions" Click="editTestsQuestions_Click" Content="Изменить вопросы теста" Margin="5" IsEnabled="False"/>
-            <Button Style="{StaticResource butStyle}" Margin="5 30" Content="Создать тест" x:Name="createTestBut" Click="createTestBut_Click"/>
+            <!-- Изменить настройки теста -->
+            <Button Style="{StaticResource butStyle}"
+                    x:Name="editTestBut" 
+                    Margin="5" 
+                    Click="editTestBut_Click"
+                    Content="Изменить настройки теста" 
+                    IsEnabled="False"/>
+            
+            <!-- Изменить вопросы теста -->
+            <Button Style="{StaticResource butStyle}"
+                    x:Name="editTestsQuestionsBut"
+                    Click="editTestsQuestionsBut_Click" 
+                    Content="Изменить вопросы теста"
+                    Margin="5"
+                    IsEnabled="False"/>
+            
+            <!-- Создать тест -->
+            <Button Style="{StaticResource butStyle}"
+                    Margin="5 30"
+                    Content="Создать тест"
+                    x:Name="createTestBut" 
+                    Click="createTestBut_Click"/>
         </StackPanel>
     </Grid>
 </Page>

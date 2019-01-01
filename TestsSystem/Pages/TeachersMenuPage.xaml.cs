@@ -28,36 +28,40 @@ namespace TestsSystem.Pages
 
         private void createTestBut_Click(object sender, RoutedEventArgs e)
         {
+            // Говорим что мы не редактируем а создаем тест и открываем страницу создания
             MainClass.editingTest = false;
-            MainClass.FrameVar.Navigate(new CreateTestPage());
+            MainClass.FrameVar.Navigate(new CreateEditTestPage());
         }
 
         private void editTestBut_Click(object sender, RoutedEventArgs e)
         {
+            // Говорим что мы редактируем тест, запоминаем его ID и открываем страницу редактирования
             MainClass.editingTest = true;
-            MainClass.editingTestID = Convert.ToInt32(testsGB.SelectedValue);
-            MainClass.FrameVar.Navigate(new CreateTestPage());
+            MainClass.editingTestID = Convert.ToInt32(testsCB.SelectedValue);
+            MainClass.FrameVar.Navigate(new CreateEditTestPage());
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            testsGB.ItemsSource = MainClass.db.Tests.Where(x => x.Author_id == CurrentUser.curUser.id).ToList();
-            testsGB.DisplayMemberPath = "Test_name";
-            testsGB.SelectedValuePath = "id";
-            testsGB.SelectedIndex = -1;
+            // Загружаем список тестов пользователя и отключаем кнопки
+            testsCB.ItemsSource = MainClass.db.Tests.Where(x => x.Author_id == CurrentUser.curUser.id).ToList();
+            testsCB.DisplayMemberPath = "Test_name";
+            testsCB.SelectedValuePath = "id";
+            testsCB.SelectedIndex = -1;
             editTestBut.IsEnabled = false;
-            editTestsQuestions.IsEnabled = false;
+            editTestsQuestionsBut.IsEnabled = false;
         }
 
-        private void testsGB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void testsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             editTestBut.IsEnabled = true;
-            editTestsQuestions.IsEnabled = true;
+            editTestsQuestionsBut.IsEnabled = true;
         }
 
-        private void editTestsQuestions_Click(object sender, RoutedEventArgs e)
+        private void editTestsQuestionsBut_Click(object sender, RoutedEventArgs e)
         {
-            MainClass.editingTestID = Convert.ToInt32(testsGB.SelectedValue);
+            // Запоминаем ID теста и открываем страницу редактирования вопросов
+            MainClass.editingTestID = Convert.ToInt32(testsCB.SelectedValue);
             MainClass.FrameVar.Navigate(new EditTestsQuestionsPage());
         }
     }

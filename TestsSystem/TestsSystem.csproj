@@ -95,8 +95,8 @@
     <Compile Include="Pages\AdminsMenuPage.xaml.cs">
       <DependentUpon>AdminsMenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CreateTestPage.xaml.cs">
-      <DependentUpon>CreateTestPage.xaml</DependentUpon>
+    <Compile Include="Pages\CreateEditTestPage.xaml.cs">
+      <DependentUpon>CreateEditTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\EditTestsQuestionsPage.xaml.cs">
       <DependentUpon>EditTestsQuestionsPage.xaml</DependentUpon>
@@ -163,7 +163,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\CreateTestPage.xaml">
+    <Page Include="Pages\CreateEditTestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

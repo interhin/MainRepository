@@ -28,108 +28,113 @@ namespace TestsSystem.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            loadQuestionF();
+            // Загружаем все вопросы теста
+            loadQuestionsF();
         }
 
-        private void questionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void questionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Если мы выбрали другой вопрос то подгружаем его варианты, заполняем поле Изменить и отключаем кнопки
             loadSelQuestOptions();
             addOptionBut.IsEnabled = true;
             turnOnQuestionsBut();
             turnOffOptionsBut();
-            if (questionsList.SelectedItem != null)
-                editQuestionTextBox.Text = (questionsList.SelectedItem as Questions).Question;
+            if (questionsLB.SelectedItem != null)
+                editQuestionTBox.Text = (questionsLB.SelectedItem as Questions).Question;
+        }
+
+
+        private void optionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Включаем кнопки если был выбран вариант ответа и заполняем поле Изменить
+            turnOnOptionsBut();
+            if (optionsLB.SelectedItem != null)
+                editOptionTBox.Text = (optionsLB.SelectedItem as Options).Text;
         }
 
         private void delQuestionBut_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Вы уверены что хотите удалить этот вопрос?","Внимание",MessageBoxButton.YesNo,MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                int selId = Convert.ToInt32(questionsList.SelectedValue);
+                // Удаляем выбранный вопрос
+                int selId = Convert.ToInt32(questionsLB.SelectedValue);
                 var selQuest = MainClass.db.Questions.Where(x => x.id == selId).First();
                 MainClass.db.Questions.Remove(selQuest);
                 MainClass.db.SaveChanges();
-                optionsList.ItemsSource = null;
-                loadQuestionF();
+                questionsLB.ItemsSource = null;
+                loadQuestionsF(); // Обновляем список вопросов
             }
         }
 
         private void addQuestionBut_Click(object sender, RoutedEventArgs e)
         {
+            // Добавляем вопрос с введнным именем
             Questions questionVar = new Questions()
             {
-                Question = questionTextBox.Text,
+                Question = questionNameTBox.Text,
                 Answer_id = null,
                 Test_id = MainClass.editingTestID
             };
             MainClass.db.Questions.Add(questionVar);
             MainClass.db.SaveChanges();
-            loadQuestionF();
+            loadQuestionsF(); // Обновляем список вопросов
         }
 
         private void delOptionBut_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Вы уверены что хотите удалить этот вариант ответа?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                int selId = Convert.ToInt32(optionsList.SelectedValue);
+                // Удаляем выбранный вариант ответа
+                int selId = Convert.ToInt32(optionsLB.SelectedValue);
                 var selOption = MainClass.db.Options.Where(x => x.id == selId).First();
                 MainClass.db.Options.Remove(selOption);
                 MainClass.db.SaveChanges();
-                loadSelQuestOptions();
-                turnOffOptionsBut();
+                loadSelQuestOptions(); // Обновляем список вариантов ответа
+                turnOffOptionsBut(); // Отключаем кнопки Удалить и Сделать правильным
             }
-        }
-
-        void loadQuestionF()
-        {
-            questionsList.DisplayMemberPath = "Question";
-            questionsList.SelectedValuePath = "id";
-            questionsList.ItemsSource = MainClass.db.Questions.Where(x => x.Test_id == MainClass.editingTestID).ToList();
-        }
-
-        void loadSelQuestOptions()
-        {
-            int selId = Convert.ToInt32(questionsList.SelectedValue);
-            if (selId != 0)
-            {
-                var optionsListVar = MainClass.db.Options.Where(x => x.QuestionID == selId).ToList();
-                optionsList.DisplayMemberPath = "Text";
-                optionsList.SelectedValuePath = "id";
-                optionsList.ItemsSource = optionsListVar;
-            }
-        }
-
-        private void addOptionBut_Click(object sender, RoutedEventArgs e)
-        {
-            int selId = Convert.ToInt32(questionsList.SelectedValue);
-            var optionVar = MainClass.db.Options.Add(new Options() {
-                Text = optionTextBox.Text,
-                QuestionID = selId
-            });
-            MainClass.db.SaveChanges();
-            loadSelQuestOptions();
-        }
-
-        private void optionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            turnOnOptionsBut();
-            if (optionsList.SelectedItem != null)
-                editOptionTextBox.Text = (optionsList.SelectedItem as Options).Text;
         }
 
         private void editQuestionBut_Click(object sender, RoutedEventArgs e)
         {
-            (questionsList.SelectedItem as Questions).Question = editQuestionTextBox.Text;
+            // Изменяем текст вопроса
+            (questionsLB.SelectedItem as Questions).Question = editQuestionTBox.Text;
             MainClass.db.SaveChanges();
-            loadQuestionF();
+            loadQuestionsF();
         }
+
+        private void addOptionBut_Click(object sender, RoutedEventArgs e)
+        {
+            // Добавляем вариант ответа к выбранному вопросу
+            int selId = Convert.ToInt32(questionsLB.SelectedValue);
+            var optionVar = MainClass.db.Options.Add(new Options()
+            {
+                Text = optionNameTBox.Text,
+                QuestionID = selId
+            });
+            MainClass.db.SaveChanges();
+            loadSelQuestOptions(); // Обновляем список вариантов ответа
+        }
+
+        private void makeCorrectBut_Click(object sender, RoutedEventArgs e)
+        {
+            // Делаем выбранный вариант ответа правильным
+            int selId = Convert.ToInt32(questionsLB.SelectedValue);
+            var selQuest = MainClass.db.Questions.Where(x => x.id == selId).First();
+            selQuest.Answer_id = Convert.ToInt32(optionsLB.SelectedValue);
+            MainClass.db.SaveChanges();
+            MessageBox.Show("Выбранный вариант помечен ответом!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
 
         private void editOptionBut_Click(object sender, RoutedEventArgs e)
         {
-            (optionsList.SelectedItem as Options).Text = editOptionTextBox.Text;
+            // Изменяем текст варианта ответа
+            (optionsLB.SelectedItem as Options).Text = editOptionTBox.Text;
             MainClass.db.SaveChanges();
             loadSelQuestOptions();
         }
+
+        // Отключения и включания кнопок
 
         void turnOnOptionsBut()
         {
@@ -157,13 +162,25 @@ namespace TestsSystem.Pages
             editQuestionBut.IsEnabled = false;
         }
 
-        private void makeCorrectBut_Click(object sender, RoutedEventArgs e)
+        void loadQuestionsF()
         {
-            int selId = Convert.ToInt32(questionsList.SelectedValue);
-            var selQuest = MainClass.db.Questions.Where(x => x.id == selId).First();
-            selQuest.Answer_id = Convert.ToInt32(optionsList.SelectedValue);
-            MainClass.db.SaveChanges();
-            MessageBox.Show("Выбранный вариант помечен ответом!","Информация",MessageBoxButton.OK,MessageBoxImage.Information);
+            // Загрузка всех вопросов выбранного теста
+            questionsLB.DisplayMemberPath = "Question";
+            questionsLB.SelectedValuePath = "id";
+            questionsLB.ItemsSource = MainClass.db.Questions.Where(x => x.Test_id == MainClass.editingTestID).ToList();
+        }
+
+        void loadSelQuestOptions()
+        {
+            // Загрузка всех вариантов ответа выбранного вопроса
+            int selId = Convert.ToInt32(questionsLB.SelectedValue);
+            if (selId != 0)
+            {
+                var optionsListVar = MainClass.db.Options.Where(x => x.QuestionID == selId).ToList();
+                optionsLB.DisplayMemberPath = "Text";
+                optionsLB.SelectedValuePath = "id";
+                optionsLB.ItemsSource = optionsListVar; // Обновляем список вопросов
+            }
         }
     }
 }

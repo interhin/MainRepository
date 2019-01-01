@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TestsSystem.Pages;
 
 namespace TestsSystem
 {
@@ -40,7 +39,7 @@ namespace TestsSystem
 
         private void homeBut_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new AuthPage());
+            frame.Navigate(new Pages.AuthPage());
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -58,7 +57,7 @@ namespace TestsSystem
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             MainClass.FrameVar = frame;
-            MainClass.FrameVar.Navigate(new AuthPage());
+            MainClass.FrameVar.Navigate(new Pages.AuthPage());
         }
     }
 }

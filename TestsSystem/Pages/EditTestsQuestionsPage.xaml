@@ -14,30 +14,82 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
+        
+        <!-- Левая колонка -->
         <StackPanel Grid.Column="0" Margin="15" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-            <TextBlock Style="{StaticResource smallHeaderText}" Text="Вопросы:"/>
-            <ListBox x:Name="questionsList" Height="150" Margin="0 10" SelectionChanged="questionsList_SelectionChanged"/>
-            <TextBox Style="{StaticResource blueTextBox}" x:Name="editQuestionTextBox" Margin="0 5"/>
-            <Button Style="{StaticResource butStyle}" Content="Изменить" x:Name="editQuestionBut" Click="editQuestionBut_Click" IsEnabled="False"/>
-            <Button Style="{StaticResource butStyle}" Content="Удалить" Margin="0 5 0 10" x:Name="delQuestionBut" Click="delQuestionBut_Click" IsEnabled="False"/>
-            <TextBox Style="{StaticResource blueTextBox}" x:Name="questionTextBox" Margin="0 5"/>
+            
+            <!-- Вопросы -->
+            <TextBlock Style="{StaticResource mediumTBlStyle}" Text="Вопросы:"/>
+            <ListBox x:Name="questionsLB" Height="150" Margin="0 10" SelectionChanged="questionsLB_SelectionChanged"/>
+            
+            <!-- Изменить -->
+            <TextBox Style="{StaticResource blueTextBox}" x:Name="editQuestionTBox" Margin="0 5"/>
+            <Button Style="{StaticResource butStyle}"
+                    Content="Изменить" 
+                    x:Name="editQuestionBut" 
+                    Click="editQuestionBut_Click" 
+                    IsEnabled="False"/>
+            
+            <!-- Удалить -->
+            <Button Style="{StaticResource butStyle}"
+                    Content="Удалить"
+                    Margin="0 5 0 10" 
+                    x:Name="delQuestionBut" 
+                    Click="delQuestionBut_Click" 
+                    IsEnabled="False"/>
+            
+            <!-- Добавить вопрос -->
+            <TextBox Style="{StaticResource blueTextBox}" x:Name="questionNameTBox" Margin="0 5"/>
             <Button Style="{StaticResource butStyle}" Content="Добавить" x:Name="addQuestionBut" Click="addQuestionBut_Click"/>
         </StackPanel>
+        
+        <!-- Правая колонка -->
         <StackPanel Grid.Column="1" Margin="15" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-            <TextBlock Style="{StaticResource smallHeaderText}" Text="Варианты ответа:"/>
-            <ListBox x:Name="optionsList" Height="150" Margin="0 10" SelectionChanged="optionsList_SelectionChanged"/>
-            <TextBox Style="{StaticResource blueTextBox}" x:Name="editOptionTextBox" Margin="0 5"/>
-            <Button Style="{StaticResource butStyle}" Content="Изменить" x:Name="editOptionBut" Click="editOptionBut_Click" IsEnabled="False"/>
+            
+            <!-- Варианты ответа -->
+            <TextBlock Style="{StaticResource mediumTBlStyle}" Text="Варианты ответа:"/>
+            <ListBox x:Name="optionsLB" Height="150" Margin="0 10" SelectionChanged="optionsLB_SelectionChanged"/>
+            
+            <!-- Изменить -->
+            <TextBox Style="{StaticResource blueTextBox}" x:Name="editOptionTBox" Margin="0 5"/>
+            <Button Style="{StaticResource butStyle}"
+                    Content="Изменить"
+                    x:Name="editOptionBut"
+                    Click="editOptionBut_Click" 
+                    IsEnabled="False"/>
+            
+            <!-- Grid для кнопок Удалить и Сделать правильным (50% от ширины родителя) -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource butStyle}" Content="Удалить" Margin="0 5 5 10" x:Name="delOptionBut" Click="delOptionBut_Click" IsEnabled="False"/>
-                <Button Grid.Column="1" Style="{StaticResource butStyle}" Content="Сделать правильным" Margin="5 5 0 10" x:Name="makeCorrectBut" Click="makeCorrectBut_Click" IsEnabled="False"/>
+                
+                <!-- Удалить -->
+                <Button Style="{StaticResource butStyle}"
+                        Content="Удалить" 
+                        Margin="0 5 5 10"
+                        x:Name="delOptionBut"
+                        Click="delOptionBut_Click"
+                        IsEnabled="False"/>
+                
+                <!-- Сделать правильным -->
+                <Button Grid.Column="1"
+                        Style="{StaticResource butStyle}"
+                        Content="Сделать правильным"
+                        Margin="5 5 0 10"
+                        x:Name="makeCorrectBut"
+                        Click="makeCorrectBut_Click" 
+                        IsEnabled="False"/>
             </Grid>
-            <TextBox Style="{StaticResource blueTextBox}" x:Name="optionTextBox" Margin="0 5"/>
-            <Button Style="{StaticResource butStyle}" Content="Добавить" x:Name="addOptionBut" Click="addOptionBut_Click" IsEnabled="False"/>
+            
+            <!-- Добавить вариант ответа -->
+            <TextBox Style="{StaticResource blueTextBox}" x:Name="optionNameTBox" Margin="0 5"/>
+            <Button Style="{StaticResource butStyle}" 
+                    Content="Добавить"
+                    x:Name="addOptionBut"
+                    Click="addOptionBut_Click"
+                    IsEnabled="False"/>
         </StackPanel>
     </Grid>
 </Page>
