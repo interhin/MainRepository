@@ -11,23 +11,55 @@ namespace TestsSystem
 {
     public class MainClass
     {
-        public static Tests_bdEntities1 db = new Tests_bdEntities1(); // Экземпляр БД
+        public static Tests_bdEntities db = new Tests_bdEntities(); // Экземпляр БД
 
         public static string addedTestName { get; set; } // Имя добавленного теста
         public static int addedTestID { get; set; } // ID добавленного теста
 
         public static Frame FrameVar;
 
-        public bool backButEn { get; set; } = false; // Switcher кнопки назад
         public static bool editingTest { get; set; } = false; // Проходит ли редактирование теста
         public static int editingTestID { get; set; } // ID Теста который редактируется
 
         public static int testingTestID { get; set; } // ID Теста который проходится в данный момент
         public static string testingTestName { get; set; } // Имя Теста который проходится в данный момент
 
-        public MainClass()
+        public static bool disableBack { get; set; } = false;
+
+        public static int HoursToSeconds(int seconds)
         {
-            backButEn = FrameVar.CanGoBack;
+            return seconds * 3600;
         }
+
+        public static int MinutesToSeconds(int seconds)
+        {
+            return seconds * 60;
+        }
+
+        public static int HoursToSeconds(string seconds)
+        {
+            return Convert.ToInt32(seconds) * 3600;
+        }
+
+        public static int MinutesToSeconds(string seconds)
+        {
+            return Convert.ToInt32(seconds) * 60;
+        }
+
+        public static int CalcHours(int seconds)
+        {
+            return seconds / 3600;
+        }
+
+        public static int CalcMinutes(int seconds)
+        {
+            return (seconds % 3600) / 60;
+        }
+
+        public static int CalcSeconds(int seconds)
+        {
+            return (seconds % 3600) % 60;
+        }
+
     }
 }

@@ -32,7 +32,11 @@
         </StackPanel>
 
 
-        <Frame Margin="10" Grid.Row="1" x:Name="frame" NavigationUIVisibility="Hidden" Navigated="frame_Navigated"/>
+        <Frame Margin="10"
+               Grid.Row="1"
+               x:Name="frame"
+               NavigationUIVisibility="Hidden" 
+               Navigated="frame_Navigated"/>
 
     </Grid>
 </Window>

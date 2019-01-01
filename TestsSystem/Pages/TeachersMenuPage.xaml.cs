@@ -44,18 +44,13 @@ namespace TestsSystem.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // Загружаем список тестов пользователя и отключаем кнопки
-            testsCB.ItemsSource = MainClass.db.Tests.Where(x => x.Author_id == CurrentUser.curUser.id).ToList();
-            testsCB.DisplayMemberPath = "Test_name";
-            testsCB.SelectedValuePath = "id";
-            testsCB.SelectedIndex = -1;
-            editTestBut.IsEnabled = false;
-            editTestsQuestionsBut.IsEnabled = false;
+            LoadTests();
+            TurnOffButs();
         }
 
         private void testsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            editTestBut.IsEnabled = true;
-            editTestsQuestionsBut.IsEnabled = true;
+            TurnOnButs();
         }
 
         private void editTestsQuestionsBut_Click(object sender, RoutedEventArgs e)
@@ -63,6 +58,26 @@ namespace TestsSystem.Pages
             // Запоминаем ID теста и открываем страницу редактирования вопросов
             MainClass.editingTestID = Convert.ToInt32(testsCB.SelectedValue);
             MainClass.FrameVar.Navigate(new EditTestsQuestionsPage());
+        }
+
+        void TurnOffButs()
+        {
+            editTestBut.IsEnabled = false;
+            editTestsQuestionsBut.IsEnabled = false;
+        }
+        
+        void TurnOnButs()
+        {
+            editTestBut.IsEnabled = true;
+            editTestsQuestionsBut.IsEnabled = true;
+        }
+
+        void LoadTests()
+        {
+            testsCB.ItemsSource = MainClass.db.Tests.Where(x => x.Author_id == CurrentUser.curUser.id).ToList();
+            testsCB.DisplayMemberPath = "Test_name";
+            testsCB.SelectedValuePath = "id";
+            testsCB.SelectedIndex = -1;
         }
     }
 }

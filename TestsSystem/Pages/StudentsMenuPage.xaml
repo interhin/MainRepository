@@ -13,19 +13,22 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="15">
+
             <!-- Выберите тест -->
             <TextBlock Style="{StaticResource mediumTBlStyle}"
                        HorizontalAlignment="Center"
                        Text="Выберите тест"/>
             <ListBox x:Name="testsLB" 
                      Margin="0 10 0 0" 
-                     Height="150"/>
+                     Height="150"
+                     SelectionChanged="testsLB_SelectionChanged"/>
             
             <!-- Пройти тест -->
             <Button Content="Пройти тест"
                     Margin="0 10 0 0" 
                     x:Name="startTestBut"
                     Click="startTestBut_Click"
+                    IsEnabled="False"
                     Style="{StaticResource butStyle}"/>
             
             <!-- История пройденных тестов -->

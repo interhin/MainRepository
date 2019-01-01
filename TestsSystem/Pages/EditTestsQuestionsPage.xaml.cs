@@ -29,16 +29,16 @@ namespace TestsSystem.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // Загружаем все вопросы теста
-            loadQuestionsF();
+            LoadQuestions();
         }
 
         private void questionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Если мы выбрали другой вопрос то подгружаем его варианты, заполняем поле Изменить и отключаем кнопки
-            loadSelQuestOptions();
+            LoadSelQuestOptions();
             addOptionBut.IsEnabled = true;
-            turnOnQuestionsBut();
-            turnOffOptionsBut();
+            TurnOnQuestionsBut();
+            TurnOffOptionsBut();
             if (questionsLB.SelectedItem != null)
                 editQuestionTBox.Text = (questionsLB.SelectedItem as Questions).Question;
         }
@@ -47,7 +47,7 @@ namespace TestsSystem.Pages
         private void optionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Включаем кнопки если был выбран вариант ответа и заполняем поле Изменить
-            turnOnOptionsBut();
+            TurnOnOptionsBut();
             if (optionsLB.SelectedItem != null)
                 editOptionTBox.Text = (optionsLB.SelectedItem as Options).Text;
         }
@@ -61,8 +61,8 @@ namespace TestsSystem.Pages
                 var selQuest = MainClass.db.Questions.Where(x => x.id == selId).First();
                 MainClass.db.Questions.Remove(selQuest);
                 MainClass.db.SaveChanges();
-                questionsLB.ItemsSource = null;
-                loadQuestionsF(); // Обновляем список вопросов
+
+                LoadQuestions(); // Обновляем список вопросов
             }
         }
 
@@ -77,7 +77,8 @@ namespace TestsSystem.Pages
             };
             MainClass.db.Questions.Add(questionVar);
             MainClass.db.SaveChanges();
-            loadQuestionsF(); // Обновляем список вопросов
+
+            LoadQuestions(); // Обновляем список вопросов
         }
 
         private void delOptionBut_Click(object sender, RoutedEventArgs e)
@@ -89,8 +90,8 @@ namespace TestsSystem.Pages
                 var selOption = MainClass.db.Options.Where(x => x.id == selId).First();
                 MainClass.db.Options.Remove(selOption);
                 MainClass.db.SaveChanges();
-                loadSelQuestOptions(); // Обновляем список вариантов ответа
-                turnOffOptionsBut(); // Отключаем кнопки Удалить и Сделать правильным
+                LoadSelQuestOptions(); // Обновляем список вариантов ответа
+                TurnOffOptionsBut(); // Отключаем кнопки Удалить и Сделать правильным
             }
         }
 
@@ -99,7 +100,8 @@ namespace TestsSystem.Pages
             // Изменяем текст вопроса
             (questionsLB.SelectedItem as Questions).Question = editQuestionTBox.Text;
             MainClass.db.SaveChanges();
-            loadQuestionsF();
+
+            LoadQuestions();
         }
 
         private void addOptionBut_Click(object sender, RoutedEventArgs e)
@@ -112,7 +114,8 @@ namespace TestsSystem.Pages
                 QuestionID = selId
             });
             MainClass.db.SaveChanges();
-            loadSelQuestOptions(); // Обновляем список вариантов ответа
+
+            LoadSelQuestOptions(); // Обновляем список вариантов ответа
         }
 
         private void makeCorrectBut_Click(object sender, RoutedEventArgs e)
@@ -122,7 +125,7 @@ namespace TestsSystem.Pages
             var selQuest = MainClass.db.Questions.Where(x => x.id == selId).First();
             selQuest.Answer_id = Convert.ToInt32(optionsLB.SelectedValue);
             MainClass.db.SaveChanges();
-            MessageBox.Show("Выбранный вариант помечен ответом!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Выбранный вариант помечен как правильный!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 
@@ -131,38 +134,39 @@ namespace TestsSystem.Pages
             // Изменяем текст варианта ответа
             (optionsLB.SelectedItem as Options).Text = editOptionTBox.Text;
             MainClass.db.SaveChanges();
-            loadSelQuestOptions();
+
+            LoadSelQuestOptions();
         }
 
         // Отключения и включания кнопок
 
-        void turnOnOptionsBut()
+        void TurnOnOptionsBut()
         {
             delOptionBut.IsEnabled = true;
             editOptionBut.IsEnabled = true;
             makeCorrectBut.IsEnabled = true;
         }
 
-        void turnOffOptionsBut()
+        void TurnOffOptionsBut()
         {
             delOptionBut.IsEnabled = false;
             editOptionBut.IsEnabled = false;
             makeCorrectBut.IsEnabled = false;
         }
 
-        void turnOnQuestionsBut()
+        void TurnOnQuestionsBut()
         {
             delQuestionBut.IsEnabled = true;
             editQuestionBut.IsEnabled = true;
         }
 
-        void turnOffQuestionsBut()
+        void TurnOffQuestionsBut()
         {
             delQuestionBut.IsEnabled = false;
             editQuestionBut.IsEnabled = false;
         }
 
-        void loadQuestionsF()
+        void LoadQuestions()
         {
             // Загрузка всех вопросов выбранного теста
             questionsLB.DisplayMemberPath = "Question";
@@ -170,7 +174,7 @@ namespace TestsSystem.Pages
             questionsLB.ItemsSource = MainClass.db.Questions.Where(x => x.Test_id == MainClass.editingTestID).ToList();
         }
 
-        void loadSelQuestOptions()
+        void LoadSelQuestOptions()
         {
             // Загрузка всех вариантов ответа выбранного вопроса
             int selId = Convert.ToInt32(questionsLB.SelectedValue);

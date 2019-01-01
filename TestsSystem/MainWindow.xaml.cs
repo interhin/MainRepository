@@ -32,32 +32,39 @@ namespace TestsSystem
 
         private void frame_Navigated(object sender, NavigationEventArgs e)
         {
-            backBut.IsEnabled = frame.CanGoBack;
+            backBut.IsEnabled = MainClass.disableBack == true ? false : frame.CanGoBack;
             homeBut.IsEnabled = !(frame.Content is Pages.AuthPage);
 
         }
 
         private void homeBut_Click(object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new Pages.AuthPage());
+            while (frame.CanGoBack)
+                frame.GoBack();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.PreviousSize == e.NewSize)
+            CenteringWindow(e.PreviousSize, e.NewSize); // Центрируем окно если размеры изменились
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainClass.FrameVar = frame; // Передаем экземпляр Frame'a в public класс чтобы к нему был доступ всем
+            frame.Navigate(new Pages.AuthPage());
+        }
+
+        void CenteringWindow(Size PreviousSize, Size NewSize)
+        {
+            if (PreviousSize == NewSize)
                 return;
 
             var w = SystemParameters.PrimaryScreenWidth;
             var h = SystemParameters.PrimaryScreenHeight;
 
-            this.Left = (w - e.NewSize.Width) / 2;
-            this.Top = (h - e.NewSize.Height) / 2;
+            this.Left = (w - NewSize.Width) / 2;
+            this.Top = (h - NewSize.Height) / 2;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            MainClass.FrameVar = frame;
-            MainClass.FrameVar.Navigate(new Pages.AuthPage());
-        }
     }
 }
