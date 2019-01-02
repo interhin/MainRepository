@@ -34,7 +34,7 @@
                                         Header="Роль" 
                                         DisplayMemberPath="Name"
                                         SelectedValuePath="id"
-                                        SelectedValueBinding="{Binding Role, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                        SelectedValueBinding="{Binding RoleID, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>

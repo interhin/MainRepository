@@ -89,15 +89,21 @@
     <Compile Include="Classes\MessageService.cs" />
     <Compile Include="Classes\TestsService.cs" />
     <Compile Include="Converters\heightConverter.cs" />
-    <Compile Include="Models\History.cs">
-      <DependentUpon>TestsModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Converters\widthConverter.cs" />
+    <Compile Include="Models\History.cs">
+      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Options.cs">
-      <DependentUpon>TestsModel.tt</DependentUpon>
+      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Questions.cs">
+      <DependentUpon>TestsModelAzure.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Roles.cs">
-      <DependentUpon>TestsModel.tt</DependentUpon>
+      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tests.cs">
+      <DependentUpon>TestsModelAzure.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestsModelAzure.Context.cs">
       <AutoGen>True</AutoGen>
@@ -113,6 +119,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestsModelAzure.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Users.cs">
+      <DependentUpon>TestsModelAzure.tt</DependentUpon>
     </Compile>
     <Compile Include="Pages\AddQuestionsPage.xaml.cs">
       <DependentUpon>AddQuestionsPage.xaml</DependentUpon>
@@ -134,33 +143,6 @@
     </Compile>
     <Compile Include="Pages\TestingPage.xaml.cs">
       <DependentUpon>TestingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Questions.cs">
-      <DependentUpon>TestsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>TestsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tests.cs">
-      <DependentUpon>TestsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TestsModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TestsModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TestsModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TestsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TestsModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TestsModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Users.cs">
-      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -249,13 +231,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="Models\TestsModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TestsModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Models\TestsModel.edmx.diagram">
-      <DependentUpon>TestsModel.edmx</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -264,16 +239,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\TestsModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestsModel.edmx</DependentUpon>
-      <LastGenOutput>TestsModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\TestsModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestsModel.edmx</DependentUpon>
-      <LastGenOutput>TestsModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\TestsModelAzure.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TestsModelAzure.edmx</DependentUpon>

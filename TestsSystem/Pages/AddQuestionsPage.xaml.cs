@@ -93,7 +93,7 @@ namespace TestsSystem.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            testNameTBl.Text = TestsService.addedTest.Test_name; // Выводим имя теста к которому добавляем вопросы
+            testNameTBl.Text = TestsService.addedTest.Name; // Выводим имя теста к которому добавляем вопросы
         }
 
         private void exitToMenuBut_Click(object sender, RoutedEventArgs e)
@@ -130,9 +130,9 @@ namespace TestsSystem.Pages
             int correctAnswerDbID = 0; // Переменная для ID правильного ответ (который присвоит база данных)
             Questions question = new Questions()
             {
-                Question = questionTBox.Text,
-                Answer_id = null,
-                Test_id = TestsService.addedTest.id
+                Text = questionTBox.Text,
+                AnswerID = null,
+                TestID = TestsService.addedTest.id
 
             };
             MainClass.db.Questions.Add(question);
@@ -153,7 +153,7 @@ namespace TestsSystem.Pages
                     correctAnswerDbID = option.id;
             }
 
-            question.Answer_id = correctAnswerDbID;
+            question.AnswerID = correctAnswerDbID;
             MainClass.db.SaveChanges();
         }
     }

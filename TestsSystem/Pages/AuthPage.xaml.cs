@@ -36,7 +36,7 @@ namespace TestsSystem.Pages
                 // Если вошли то добавляем пользователя в публичный класс чтобы запомнить какой пользователь вошёл
                 UsersService.currentUser = user;
                 // Проверяем кто вошел (1 - Админ, 2 - Учитель, 3 - Студент) 
-                switch (user.Role) {
+                switch (user.RoleID) {
                     case 1:
                         MainClass.FrameVar.Navigate(new AdminsMenuPage());
                         break;

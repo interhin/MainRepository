@@ -26,12 +26,12 @@ namespace TestsSystem.Models
         public string Password { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public int Role { get; set; }
+        public int RoleID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<History> History { get; set; }
+        public virtual Roles Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tests> Tests { get; set; }
-        public virtual Roles Roles { get; set; }
     }
 }

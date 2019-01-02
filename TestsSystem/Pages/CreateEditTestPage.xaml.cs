@@ -67,19 +67,19 @@ namespace TestsSystem.Pages
         void LoadPageForEdit()
         {
 
-            testNameTBox.Text = TestsService.editingTest.Test_name;
+            testNameTBox.Text = TestsService.editingTest.Name;
 
-            passHoursTBox.Value = CalcService.CalcHours(TestsService.editingTest.Pass_time); // Часы теста
-            passMinutesTBox.Value = CalcService.CalcMinutes(TestsService.editingTest.Pass_time); // Минуты теста
-            passSecondsTBox.Value = CalcService.CalcSeconds(TestsService.editingTest.Pass_time); // Секунды теста
+            passHoursTBox.Value = CalcService.CalcHours(TestsService.editingTest.PassTime); // Часы теста
+            passMinutesTBox.Value = CalcService.CalcMinutes(TestsService.editingTest.PassTime); // Минуты теста
+            passSecondsTBox.Value = CalcService.CalcSeconds(TestsService.editingTest.PassTime); // Секунды теста
 
-            questionHoursTBox.Value =   CalcService.CalcHours(TestsService.editingTest.Question_time); // Часы вопроса
-            questionMinutesTBox.Value = CalcService.CalcMinutes(TestsService.editingTest.Question_time); // Минуты вопроса
-            questionSecondsTBox.Value = CalcService.CalcSeconds(TestsService.editingTest.Question_time); // Секунды вопроса
+            questionHoursTBox.Value =   CalcService.CalcHours(TestsService.editingTest.QuestionTime); // Часы вопроса
+            questionMinutesTBox.Value = CalcService.CalcMinutes(TestsService.editingTest.QuestionTime); // Минуты вопроса
+            questionSecondsTBox.Value = CalcService.CalcSeconds(TestsService.editingTest.QuestionTime); // Секунды вопроса
 
-            passFiveTBox.Value =  TestsService.editingTest.Num_to_pass_five; // Баллов на 5
-            passFourTBox.Value =  TestsService.editingTest.Num_to_pass_four; // Баллов на 4
-            passThreeTBox.Value = TestsService.editingTest.Num_to_pass_three; // Баллов на 3
+            passFiveTBox.Value =  TestsService.editingTest.NumToPassFive; // Баллов на 5
+            passFourTBox.Value =  TestsService.editingTest.NumToPassFour; // Баллов на 4
+            passThreeTBox.Value = TestsService.editingTest.NumToPassThree; // Баллов на 3
 
             createTestBut.Content = "Изменить информацию о тесте";
             this.Title = "Изменение информации о тесте";
@@ -97,27 +97,27 @@ namespace TestsSystem.Pages
         void UpdateTest()
         {
             // Меняем данные на пользовательские
-            TestsService.editingTest.Author_id = UsersService.currentUser.id;
-            TestsService.editingTest.Test_name = testNameTBox.Text;
+            TestsService.editingTest.AuthorID = UsersService.currentUser.id;
+            TestsService.editingTest.Name = testNameTBox.Text;
 
-            TestsService.editingTest.Pass_time =   CalcService.HoursToSeconds((int)passHoursTBox.Value)
+            TestsService.editingTest.PassTime =   CalcService.HoursToSeconds((int)passHoursTBox.Value)
                                                  + CalcService.MinutesToSeconds((int)passMinutesTBox.Value)
                                                  + Convert.ToInt32(passSecondsTBox.Value);
 
-            TestsService.editingTest.Question_time =   CalcService.HoursToSeconds((int)questionHoursTBox.Value)
+            TestsService.editingTest.QuestionTime =   CalcService.HoursToSeconds((int)questionHoursTBox.Value)
                                                      + CalcService.MinutesToSeconds((int)questionMinutesTBox.Value)
                                                      + Convert.ToInt32(questionSecondsTBox.Value);
 
-            TestsService.editingTest.Num_to_pass_five =  Convert.ToInt32(passFiveTBox.Value);
-            TestsService.editingTest.Num_to_pass_four =  Convert.ToInt32(passFourTBox.Value);
-            TestsService.editingTest.Num_to_pass_three = Convert.ToInt32(passThreeTBox.Value);
+            TestsService.editingTest.NumToPassFive =  Convert.ToInt32(passFiveTBox.Value);
+            TestsService.editingTest.NumToPassFour =  Convert.ToInt32(passFourTBox.Value);
+            TestsService.editingTest.NumToPassThree = Convert.ToInt32(passThreeTBox.Value);
 
             MainClass.db.SaveChanges();
         }
 
         bool SameTest(string testName)
         {
-            var sameTestName = MainClass.db.Tests.Where(x => x.Test_name == testName).FirstOrDefault();
+            var sameTestName = MainClass.db.Tests.Where(x => x.Name == testName).FirstOrDefault();
 
             if (sameTestName == null)
                 return false;
@@ -130,23 +130,23 @@ namespace TestsSystem.Pages
             // Добавляем тест в БД
             Tests test = new Tests()
             {
-                Author_id = UsersService.currentUser.id,
-                Test_name = testNameTBox.Text,
+                AuthorID = UsersService.currentUser.id,
+                Name = testNameTBox.Text,
 
 
-                Pass_time =   CalcService.HoursToSeconds((int)passHoursTBox.Value)
+                PassTime =   CalcService.HoursToSeconds((int)passHoursTBox.Value)
                             + CalcService.MinutesToSeconds((int)passMinutesTBox.Value)
                             + Convert.ToInt32(passSecondsTBox.Value),
 
 
-                Question_time =   CalcService.HoursToSeconds((int)questionHoursTBox.Value)
+                QuestionTime =   CalcService.HoursToSeconds((int)questionHoursTBox.Value)
                                 + CalcService.MinutesToSeconds((int)questionMinutesTBox.Value)
                                 + Convert.ToInt32(questionSecondsTBox.Value),
 
 
-                Num_to_pass_five =  Convert.ToInt32(passFiveTBox.Value),
-                Num_to_pass_four =  Convert.ToInt32(passFourTBox.Value),
-                Num_to_pass_three = Convert.ToInt32(passThreeTBox.Value)
+                NumToPassFive =  Convert.ToInt32(passFiveTBox.Value),
+                NumToPassFour =  Convert.ToInt32(passFourTBox.Value),
+                NumToPassThree = Convert.ToInt32(passThreeTBox.Value)
             };
             MainClass.db.Tests.Add(test);
             MainClass.db.SaveChanges();

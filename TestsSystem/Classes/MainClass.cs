@@ -12,7 +12,7 @@ namespace TestsSystem
 {
     public static class MainClass
     {
-        public static Tests_bdEntities db = new Tests_bdEntities(); // Экземпляр БД
+        public static TestsDBEntities db = new TestsDBEntities(); // Экземпляр БД
 
         public static Frame FrameVar;
 

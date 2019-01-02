@@ -45,7 +45,7 @@ namespace TestsSystem.Pages
             List<int> passedTestsList = new List<int>();
             // Находим все тесты которые уже прошел пользователь
             passedTestsList = GetPassedTests(UsersService.currentUser.id);
-            testsLB.DisplayMemberPath = "Test_name";
+            testsLB.DisplayMemberPath = "Name";
             testsLB.SelectedValuePath = "id";
             // Достаем все тесты из БД исключая тесты из списка passedTestsList
             testsLB.ItemsSource = MainClass.db.Tests.Where(x => !passedTestsList.Contains(x.id)).ToList();
@@ -53,13 +53,13 @@ namespace TestsSystem.Pages
 
         List<int> GetPassedTests(int userID)
         {
-            return MainClass.db.History.Where(x => x.User_id == userID).Select(x => x.Test_id).ToList();
+            return MainClass.db.History.Where(x => x.UserID == userID).Select(x => x.TestID).ToList();
         }
 
         void LoadUserHistory()
         {
             // Загружаем пройденные тесты в DataGrid
-            historyDG.ItemsSource = MainClass.db.History.Where(x => x.User_id == UsersService.currentUser.id).ToList();
+            historyDG.ItemsSource = MainClass.db.History.Where(x => x.UserID == UsersService.currentUser.id).ToList();
         }
 
         private void testsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)

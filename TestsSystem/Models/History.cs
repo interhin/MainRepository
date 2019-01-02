@@ -15,8 +15,8 @@ namespace TestsSystem.Models
     public partial class History
     {
         public int id { get; set; }
-        public int User_id { get; set; }
-        public int Test_id { get; set; }
+        public int UserID { get; set; }
+        public int TestID { get; set; }
         public System.DateTime Date { get; set; }
         public int Ball { get; set; }
     

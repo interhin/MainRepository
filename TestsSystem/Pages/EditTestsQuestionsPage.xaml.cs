@@ -35,7 +35,7 @@ namespace TestsSystem.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // Загружаем все вопросы теста
-            questionsLB.DisplayMemberPath = "Question";
+            questionsLB.DisplayMemberPath = "Text";
             questionsLB.SelectedValuePath = "id";
             optionsLB.DisplayMemberPath = "Text";
             optionsLB.SelectedValuePath = "id";
@@ -55,7 +55,7 @@ namespace TestsSystem.Pages
             if (selectedQuestion != null)
             {
                 LoadSelQuestOptions(); // Загружаем варианты ответа выбранного вопроса
-                editQuestionTBox.Text = selectedQuestion.Question; // Выводим в поле изменения сам вопрос
+                editQuestionTBox.Text = selectedQuestion.Text; // Выводим в поле изменения сам вопрос
                 addOptionBut.IsEnabled = true; // Включаем кнопку добавить вариант ответа
                 EnableQuestionsBut(); // Включаем кнопки изменить и удалить вопрос
             }
@@ -100,9 +100,9 @@ namespace TestsSystem.Pages
             {
                 Questions question = new Questions()
                 {
-                    Question = questionNameTBox.Text,
-                    Answer_id = null,
-                    Test_id = TestsService.editingTest.id
+                    Text = questionNameTBox.Text,
+                    AnswerID = null,
+                    TestID = TestsService.editingTest.id
                 };
                 MainClass.db.Questions.Add(question);
                 MainClass.db.SaveChanges();
@@ -136,7 +136,7 @@ namespace TestsSystem.Pages
             {
                 if (!String.IsNullOrWhiteSpace(editQuestionTBox.Text))
                 {
-                    selectedQuestion.Question = editQuestionTBox.Text;
+                    selectedQuestion.Text = editQuestionTBox.Text;
                     MainClass.db.SaveChanges();
 
                     LoadQuestions();
@@ -173,7 +173,7 @@ namespace TestsSystem.Pages
             if (selectedQuestion != null && selectedOption != null)
             {
                 MainClass.db.Questions.Attach(selectedQuestion);
-                selectedQuestion.Answer_id = selectedOption.id;
+                selectedQuestion.AnswerID = selectedOption.id;
                 MainClass.db.SaveChanges();
                 MessageService.ShowInfo("Выбранный вариант помечен как правильный!");
                 LoadSelQuestOptions();
@@ -232,7 +232,7 @@ namespace TestsSystem.Pages
         void LoadQuestions()
         {
             // Загрузка всех вопросов выбранного теста
-            questionsLB.ItemsSource = MainClass.db.Questions.Where(x => x.Test_id == TestsService.editingTest.id).ToList();
+            questionsLB.ItemsSource = MainClass.db.Questions.Where(x => x.TestID == TestsService.editingTest.id).ToList();
         }
 
         void LoadSelQuestOptions()
@@ -248,7 +248,7 @@ namespace TestsSystem.Pages
             {
                 for (int i = 0; i < optionsLB.Items.Count; i++)
                 {
-                    if ((optionsLB.Items[i] as Options).id == selectedQuestion.Answer_id)
+                    if ((optionsLB.Items[i] as Options).id == selectedQuestion.AnswerID)
                     {
                         optionsLB.UpdateLayout(); // ?? (Нашёл в инете решение, без него ContainerFromItem возвращает null)
                         var correctStyle = Application.Current.FindResource("correctAnswerStyle") as Style;

@@ -22,13 +22,13 @@ namespace TestsSystem.Models
         }
     
         public int id { get; set; }
-        public string Test_name { get; set; }
-        public int Author_id { get; set; }
-        public int Pass_time { get; set; }
-        public int Question_time { get; set; }
-        public int Num_to_pass_five { get; set; }
-        public int Num_to_pass_four { get; set; }
-        public int Num_to_pass_three { get; set; }
+        public string Name { get; set; }
+        public int AuthorID { get; set; }
+        public int PassTime { get; set; }
+        public int QuestionTime { get; set; }
+        public int NumToPassFive { get; set; }
+        public int NumToPassFour { get; set; }
+        public int NumToPassThree { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<History> History { get; set; }

@@ -13,10 +13,10 @@ namespace TestsSystem.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Tests_bdEntities1 : DbContext
+    public partial class TestsDBEntities : DbContext
     {
-        public Tests_bdEntities1()
-            : base("name=Tests_bdEntities1")
+        public TestsDBEntities()
+            : base("name=TestsDBEntities")
         {
         }
     
@@ -28,6 +28,7 @@ namespace TestsSystem.Models
         public virtual DbSet<History> History { get; set; }
         public virtual DbSet<Options> Options { get; set; }
         public virtual DbSet<Questions> Questions { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Tests> Tests { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }

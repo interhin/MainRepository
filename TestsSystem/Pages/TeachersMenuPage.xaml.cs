@@ -74,8 +74,8 @@ namespace TestsSystem.Pages
 
         void LoadTests()
         {
-            testsCB.ItemsSource = MainClass.db.Tests.Where(x => x.Author_id == UsersService.currentUser.id).ToList();
-            testsCB.DisplayMemberPath = "Test_name";
+            testsCB.ItemsSource = MainClass.db.Tests.Where(x => x.AuthorID == UsersService.currentUser.id).ToList();
+            testsCB.DisplayMemberPath = "Name";
             testsCB.SelectedValuePath = "id";
             testsCB.SelectedIndex = -1;
         }

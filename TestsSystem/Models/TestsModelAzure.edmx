@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Tests_bdModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TestsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="History">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="User_id" Type="int" Nullable="false" />
-          <Property Name="Test_id" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="TestID" Type="int" Nullable="false" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="Ball" Type="int" Nullable="false" />
         </EntityType>
@@ -28,22 +28,29 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Question" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="Answer_id" Type="int" />
-          <Property Name="Test_id" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="AnswerID" Type="int" />
+          <Property Name="TestID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Tests">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Test_name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Author_id" Type="int" Nullable="false" />
-          <Property Name="Pass_time" Type="bigint" Nullable="false" />
-          <Property Name="Question_time" Type="int" Nullable="false" />
-          <Property Name="Num_to_pass_five" Type="int" Nullable="false" />
-          <Property Name="Num_to_pass_four" Type="int" Nullable="false" />
-          <Property Name="Num_to_pass_three" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AuthorID" Type="int" Nullable="false" />
+          <Property Name="PassTime" Type="int" Nullable="false" />
+          <Property Name="QuestionTime" Type="int" Nullable="false" />
+          <Property Name="NumToPassFive" Type="int" Nullable="false" />
+          <Property Name="NumToPassFour" Type="int" Nullable="false" />
+          <Property Name="NumToPassThree" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -54,7 +61,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_History_Tests">
           <End Role="Tests" Type="Self.Tests" Multiplicity="1" />
@@ -64,7 +71,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="History">
-              <PropertyRef Name="Test_id" />
+              <PropertyRef Name="TestID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -76,7 +83,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="History">
-              <PropertyRef Name="User_id" />
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -102,7 +109,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Questions">
-              <PropertyRef Name="Test_id" />
+              <PropertyRef Name="TestID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -114,14 +121,27 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Tests">
-              <PropertyRef Name="Author_id" />
+              <PropertyRef Name="AuthorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Tests_bdModel1StoreContainer">
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestsDBModelStoreContainer">
           <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Options" EntityType="Self.Options" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tests" EntityType="Self.Tests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_History_Tests" Association="Self.FK_History_Tests">
@@ -144,19 +164,23 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Tests" EntitySet="Tests" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Tests_bdModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TestsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="History">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_id" Type="Int32" Nullable="false" />
-          <Property Name="Test_id" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Ball" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_History_Tests" FromRole="History" ToRole="Tests" />
@@ -176,24 +200,32 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Question" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Answer_id" Type="Int32" />
-          <Property Name="Test_id" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AnswerID" Type="Int32" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Options" Relationship="Self.FK_Options_Questions" FromRole="Questions" ToRole="Options" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_Questions_Tests" FromRole="Questions" ToRole="Tests" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
         </EntityType>
         <EntityType Name="Tests">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Test_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Author_id" Type="Int32" Nullable="false" />
-          <Property Name="Pass_time" Type="Int64" Nullable="false" />
-          <Property Name="Question_time" Type="Int32" Nullable="false" />
-          <Property Name="Num_to_pass_five" Type="Int32" Nullable="false" />
-          <Property Name="Num_to_pass_four" Type="Int32" Nullable="false" />
-          <Property Name="Num_to_pass_three" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AuthorID" Type="Int32" Nullable="false" />
+          <Property Name="PassTime" Type="Int32" Nullable="false" />
+          <Property Name="QuestionTime" Type="Int32" Nullable="false" />
+          <Property Name="NumToPassFive" Type="Int32" Nullable="false" />
+          <Property Name="NumToPassFour" Type="Int32" Nullable="false" />
+          <Property Name="NumToPassThree" Type="Int32" Nullable="false" />
           <NavigationProperty Name="History" Relationship="Self.FK_History_Tests" FromRole="Tests" ToRole="History" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_Tests" FromRole="Tests" ToRole="Questions" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Tests_Users" FromRole="Tests" ToRole="Users" />
@@ -207,8 +239,9 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="History" Relationship="Self.FK_History_Users" FromRole="Users" ToRole="History" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="Tests" Relationship="Self.FK_Tests_Users" FromRole="Users" ToRole="Tests" />
         </EntityType>
         <Association Name="FK_History_Tests">
@@ -219,7 +252,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="History">
-              <PropertyRef Name="Test_id" />
+              <PropertyRef Name="TestID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -231,7 +264,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="History">
-              <PropertyRef Name="User_id" />
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -257,7 +290,19 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Questions">
-              <PropertyRef Name="Test_id" />
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -269,14 +314,15 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Tests">
-              <PropertyRef Name="Author_id" />
+              <PropertyRef Name="AuthorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Tests_bdEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TestsDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="History" EntityType="Self.History" />
           <EntitySet Name="Options" EntityType="Self.Options" />
           <EntitySet Name="Questions" EntityType="Self.Questions" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
           <EntitySet Name="Tests" EntityType="Self.Tests" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK_History_Tests" Association="Self.FK_History_Tests">
@@ -295,6 +341,10 @@
             <End Role="Tests" EntitySet="Tests" />
             <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tests_Users" Association="Self.FK_Tests_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Tests" EntitySet="Tests" />
@@ -305,20 +355,20 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Tests_bdModel1StoreContainer" CdmEntityContainer="Tests_bdEntities1">
+        <EntityContainerMapping StorageEntityContainer="TestsDBModelStoreContainer" CdmEntityContainer="TestsDBEntities">
           <EntitySetMapping Name="History">
-            <EntityTypeMapping TypeName="Tests_bdModel1.History">
+            <EntityTypeMapping TypeName="TestsDBModel.History">
               <MappingFragment StoreEntitySet="History">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="User_id" ColumnName="User_id" />
-                <ScalarProperty Name="Test_id" ColumnName="Test_id" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Ball" ColumnName="Ball" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Options">
-            <EntityTypeMapping TypeName="Tests_bdModel1.Options">
+            <EntityTypeMapping TypeName="TestsDBModel.Options">
               <MappingFragment StoreEntitySet="Options">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
@@ -327,38 +377,46 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Questions">
-            <EntityTypeMapping TypeName="Tests_bdModel1.Questions">
+            <EntityTypeMapping TypeName="TestsDBModel.Questions">
               <MappingFragment StoreEntitySet="Questions">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Question" ColumnName="Question" />
-                <ScalarProperty Name="Answer_id" ColumnName="Answer_id" />
-                <ScalarProperty Name="Test_id" ColumnName="Test_id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="TestsDBModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tests">
-            <EntityTypeMapping TypeName="Tests_bdModel1.Tests">
+            <EntityTypeMapping TypeName="TestsDBModel.Tests">
               <MappingFragment StoreEntitySet="Tests">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Test_name" ColumnName="Test_name" />
-                <ScalarProperty Name="Author_id" ColumnName="Author_id" />
-                <ScalarProperty Name="Pass_time" ColumnName="Pass_time" />
-                <ScalarProperty Name="Question_time" ColumnName="Question_time" />
-                <ScalarProperty Name="Num_to_pass_five" ColumnName="Num_to_pass_five" />
-                <ScalarProperty Name="Num_to_pass_four" ColumnName="Num_to_pass_four" />
-                <ScalarProperty Name="Num_to_pass_three" ColumnName="Num_to_pass_three" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+                <ScalarProperty Name="PassTime" ColumnName="PassTime" />
+                <ScalarProperty Name="QuestionTime" ColumnName="QuestionTime" />
+                <ScalarProperty Name="NumToPassFive" ColumnName="NumToPassFive" />
+                <ScalarProperty Name="NumToPassFour" ColumnName="NumToPassFour" />
+                <ScalarProperty Name="NumToPassThree" ColumnName="NumToPassThree" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Tests_bdModel1.Users">
+            <EntityTypeMapping TypeName="TestsDBModel.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

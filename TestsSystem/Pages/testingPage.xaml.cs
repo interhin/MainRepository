@@ -102,8 +102,8 @@ namespace TestsSystem.Pages
             if (questionNum < questionsList.Count) // Смотрим не вышли ли мы за пределы массива
             {
                     var currentQuestionID = questionsList[questionNum].id; // Узнаем ID вопроса чтобы найти его варианты ответа
-                    questionTBl.Text = questionsList[questionNum].Question; // Сам вопрос
-                    answerID = questionsList[questionNum].Answer_id ?? 0; // Запоминаем ID правильного ответа
+                    questionTBl.Text = questionsList[questionNum].Text; // Сам вопрос
+                    answerID = questionsList[questionNum].AnswerID ?? 0; // Запоминаем ID правильного ответа
                     optionsLB.ItemsSource = MainClass.db.Options.Where(x => x.QuestionID == currentQuestionID).ToList(); // Грузим список в ListBox
             }
             else
@@ -114,7 +114,7 @@ namespace TestsSystem.Pages
         {
             try {
                 // Загружаем вопросы текущего теста
-                questionsList = MainClass.db.Questions.Where(x => x.Test_id == TestsService.testingTest.id).ToList();
+                questionsList = MainClass.db.Questions.Where(x => x.TestID == TestsService.testingTest.id).ToList();
             }
             catch
             {
@@ -122,11 +122,11 @@ namespace TestsSystem.Pages
             }
 
             // Загружаем данные о тесте
-            questionTime = TestsService.testingTest.Question_time;
-            passTime = TestsService.testingTest.Pass_time;
+            questionTime = TestsService.testingTest.QuestionTime;
+            passTime = TestsService.testingTest.PassTime;
 
             // Вывод в заголовок имя теста
-            testNameTBl.Text = TestsService.testingTest.Test_name;
+            testNameTBl.Text = TestsService.testingTest.Name;
 
             UpdatePassTBox();
             UpdateQuestionTBox();
@@ -156,11 +156,11 @@ namespace TestsSystem.Pages
         {
             int ball = 0;
 
-            if (totalBalls >= TestsService.testingTest.Num_to_pass_five)
+            if (totalBalls >= TestsService.testingTest.NumToPassFive)
                 ball = 5;
-            else if (totalBalls >= TestsService.testingTest.Num_to_pass_four)
+            else if (totalBalls >= TestsService.testingTest.NumToPassFour)
                 ball = 4;
-            else if (totalBalls >= TestsService.testingTest.Num_to_pass_three)
+            else if (totalBalls >= TestsService.testingTest.NumToPassThree)
                 ball = 3;
             else
                 ball = 2;
@@ -174,8 +174,8 @@ namespace TestsSystem.Pages
             {
                 History history = new History()
                 {
-                    User_id = UsersService.currentUser.id,
-                    Test_id = TestsService.testingTest.id,
+                    UserID = UsersService.currentUser.id,
+                    TestID = TestsService.testingTest.id,
                     Date = DateTime.Now,
                     Ball = ball
                 };
@@ -228,7 +228,7 @@ namespace TestsSystem.Pages
 
         void ResetQuestionTime()
         {
-            questionTime = TestsService.testingTest.Question_time;
+            questionTime = TestsService.testingTest.QuestionTime;
             UpdateQuestionTBox();
         }
 
