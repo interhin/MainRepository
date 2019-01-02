@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TestsSystem.Pages"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
       mc:Ignorable="d" 
       MinWidth="800"
       MinHeight="400"
@@ -34,19 +35,19 @@
                     
                     <!-- Часов -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="passHoursTBox"/>
+                        <xctk:IntegerUpDown x:Name="passHoursTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="Часов"/>
                     </StackPanel>
                     
                     <!-- Минут -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="passMinutesTBox"/>
+                        <xctk:IntegerUpDown x:Name="passMinutesTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="Минут"/>
                     </StackPanel>
                     
                     <!-- Секунд -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="passSecondsTBox"/>
+                        <xctk:IntegerUpDown x:Name="passSecondsTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="Секунд"/>
                     </StackPanel>
                 </StackPanel>
@@ -59,19 +60,19 @@
 
                     <!-- Часов -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="questionHoursTBox"/>
+                        <xctk:IntegerUpDown x:Name="questionHoursTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="Часов"/>
                     </StackPanel>
 
                     <!-- Минут -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="questionMinutesTBox"/>
+                        <xctk:IntegerUpDown x:Name="questionMinutesTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="Минут"/>
                     </StackPanel>
 
                     <!-- Секунд -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="questionSecondsTBox"/>
+                        <xctk:IntegerUpDown x:Name="questionSecondsTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="Секунд"/>
                     </StackPanel>
                 </StackPanel>
@@ -84,19 +85,19 @@
 
                     <!-- На 5 -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="passFiveTBox"/>
+                        <xctk:IntegerUpDown x:Name="passFiveTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="На 5"/>
                     </StackPanel>
 
                     <!-- На 4 -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="passFourTBox"/>
+                        <xctk:IntegerUpDown x:Name="passFourTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="На 4"/>
                     </StackPanel>
 
                     <!-- На 3 -->
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource numTextBox}" x:Name="passThreeTBox"/>
+                        <xctk:IntegerUpDown x:Name="passThreeTBox" Value="0"/>
                         <TextBlock Style="{StaticResource customSmallTBl}" Text="На 3"/>
                     </StackPanel>
                 </StackPanel>

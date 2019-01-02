@@ -2,6 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TestsSystem"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:theme="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!-- Цвета -->
@@ -10,6 +12,7 @@
         <SolidColorBrush x:Key="DarkBlueBrush" Color="#1565C0"/>
         <SolidColorBrush x:Key="CorrectAnswerBrush" Color="#4CAF50"/>
         <SolidColorBrush x:Key="CorrectAnswerHoverBrush" Color="#81C784"/>
+        <Color x:Key="blueColor">#1E88E5</Color>
 
         <!-- Button -->
         <Style x:Key="butStyle" TargetType="Button">
@@ -147,7 +150,19 @@
             <Setter Property="Text" Value="0"/>
             <Setter Property="Padding" Value="0 2"/>
         </Style>
-
+        
+        <!-- IntegerUpDown -->
+        <Style TargetType="xctk:IntegerUpDown">
+            <Setter Property="Foreground" Value="{StaticResource BlueBrush}"/>
+            <Setter Property="Margin" Value="10 0"/>
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static theme:ResourceKeys.ButtonMouseOverBackgroundKey}" Opacity="0.8" Color="{StaticResource blueColor}"/>
+                <SolidColorBrush x:Key="{x:Static theme:ResourceKeys.ButtonNormalBackgroundKey}" Color="{StaticResource blueColor}"/>
+                <SolidColorBrush x:Key="{x:Static theme:ResourceKeys.GlyphNormalForegroundKey}" Color="White"/>
+                <SolidColorBrush x:Key="{x:Static theme:ResourceKeys.ButtonNormalOuterBorderKey}" Color="Transparent"/>
+            </Style.Resources>
+        </Style>
+        
         <!-- PasswordBox -->
         <Style TargetType="PasswordBox" x:Key="bluePassBox">
             <Setter Property="Foreground" Value="{StaticResource BlueBrush}"/>

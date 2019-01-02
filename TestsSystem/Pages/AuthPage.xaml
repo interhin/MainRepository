@@ -17,7 +17,7 @@
                        Text="Логин:"
                        HorizontalAlignment="Center"/>
             <TextBox Style="{StaticResource blueTextBox}" 
-                     Text="student" 
+                     Text="teacher" 
                      Margin="5" 
                      x:Name="loginTBox"/>
             
