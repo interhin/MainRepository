@@ -34,10 +34,10 @@ namespace TestsSystem.Pages
 
         private void delUserBut_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Вы уверены что хотите удалить эту запись?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageService.ShowYesNoWarning("Вы уверены что хотите удалить эту запись?") == MessageBoxResult.Yes)
             {
                 // Проверяем выбран ли какой-либо пользователь из списка
-                if ((usersDG.SelectedItem as Users)!=null)
+                if ((usersDG.SelectedItem as Users) != null)
                 {
                     MainClass.db.Users.Remove((usersDG.SelectedItem as Users));
                     MainClass.db.SaveChanges();
@@ -49,8 +49,14 @@ namespace TestsSystem.Pages
         private void saveBut_Click(object sender, RoutedEventArgs e)
         {
             // Сохраняем изменения
-            MainClass.db.SaveChanges();
-            MessageBox.Show("Изменения успешно сохранены","Информация",MessageBoxButton.OK,MessageBoxImage.Information);
+            try
+            {
+                MainClass.db.SaveChanges();
+                MessageService.ShowInfo("Изменения успешно сохранены");
+            } catch (Exception ex)
+            {
+                MessageService.ShowError(ex.Message);
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

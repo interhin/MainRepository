@@ -21,7 +21,7 @@ namespace TestsSystem.Pages
     /// </summary>
     public partial class AddQuestionsPage : Page
     {
-        string unselectedText = "Не выбран";
+        int correctAnswerIndex = -1;
 
         public AddQuestionsPage()
         {
@@ -31,77 +31,69 @@ namespace TestsSystem.Pages
         private void addOptionBut_Click(object sender, RoutedEventArgs e)
         {
             // Добавляем вариант ответа в список
-            optionsLB.Items.Add(optionNameTBox.Text);
+            if (!String.IsNullOrWhiteSpace(optionNameTBox.Text))
+                optionsLB.Items.Add(optionNameTBox.Text);
         }
 
         private void delOptionBut_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Вы уверены что хотите удалить этот вариант?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageService.ShowYesNoWarning("Вы уверены что хотите удалить этот вариант?") == MessageBoxResult.Yes)
             {
                 // Если удаляем вариант который был правильным ответом то меняем статус на "Не выбрано"
-                if (optionsLB.SelectedItem.ToString() == correctAnswerTBl.Text)
-                    correctAnswerTBl.Text = unselectedText;
-                // Если нет то просто удаляем и отключает кнопки
+                if (optionsLB.SelectedIndex == correctAnswerIndex)
+                {
+                    correctAnswerIndex = -1;
+                    MainClass.DisableGlowAllItems(ref optionsLB);
+                }
+                // Если нет то просто удаляем и отключаем кнопки
                 optionsLB.Items.Remove(optionsLB.SelectedItem);
-                turnOffButtons();
+                DisableButtons();
             }
         }
 
         private void correctAnswerBut_Click(object sender, RoutedEventArgs e)
         {
             // Меняем правильный ответ
-            correctAnswerTBl.Text = optionsLB.SelectedItem.ToString();
+            if (optionsLB.SelectedItem != null)
+                correctAnswerIndex = optionsLB.SelectedIndex;
+
+            MainClass.DisableGlowAllItems(ref optionsLB);
+            MainClass.GlowSelectedItem(ref optionsLB);
         }
 
         private void addQuestionBut_Click(object sender, RoutedEventArgs e)
         {
             // Если все поля заполнены то добавляем вопрос
-            if (questionTBox.Text != "" && optionsLB.Items != null && correctAnswerTBl.Text != unselectedText)
+            if (!String.IsNullOrWhiteSpace(questionTBox.Text) && optionsLB.Items != null && correctAnswerIndex != -1)
             {
-                Questions question = new Questions()
+                try
                 {
-                    Question = questionTBox.Text,
-                    Answer_id = null,
-                    Test_id = MainClass.addedTestID
-
-                };
-                MainClass.db.Questions.Add(question);
-                MainClass.db.SaveChanges();
-
-                // Добавляем варианты ответа в соответствующую таблицу
-                foreach (var item in optionsLB.Items)
+                    AddQuestion();
+                } catch (Exception ex)
                 {
-                    Options option = new Options() {
-                        Text = item.ToString(),
-                        QuestionID = question.id
-                    };
-                    MainClass.db.Options.Add(option);
-                    MainClass.db.SaveChanges();
-
-                    question.Answer_id = option.id;
-                    MainClass.db.SaveChanges();
+                    MessageService.ShowError("Ошибка при добавлении вопроса: "+ex.Message);
+                    ClearFields();
+                    return;
                 }
-                if (MessageBox.Show("Вопрос успешно добавлен \n Вы желаете добавить еще вопрос?", "Информация", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+
+                if (MessageService.ShowYesNoInfo("Вопрос успешно добавлен \n Вы желаете добавить еще вопрос?") == MessageBoxResult.Yes)
                 {
                     // Очищаем все поля и отключаем кнопки
-                    optionsLB.Items.Clear();
-                    questionTBox.Text = "";
-                    correctAnswerTBl.Text = unselectedText;
-                    optionNameTBox.Text = "";
-                    turnOffButtons();
+                    ClearFields();
+                    DisableButtons();
                 }
                 else
                     MainClass.FrameVar.Navigate(new TeachersMenuPage());  // Возвращаемся в меню
 
             }
             else
-                MessageBox.Show("Заполните все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageService.ShowError("Заполните все поля!");
 
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            testNameTBl.Text = MainClass.addedTestName; // Выводим имя теста к которому добавляем вопросы
+            testNameTBl.Text = TestsService.addedTest.Test_name; // Выводим имя теста к которому добавляем вопросы
         }
 
         private void exitToMenuBut_Click(object sender, RoutedEventArgs e)
@@ -109,21 +101,60 @@ namespace TestsSystem.Pages
             MainClass.FrameVar.Navigate(new TeachersMenuPage());
         }
 
-        void turnOffButtons()
+        private void optionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            EnableButtons();
+        }
+
+        void DisableButtons()
         {
             delOptionBut.IsEnabled = false;
             correctAnswerBut.IsEnabled = false;
         }
 
-        void turnOnButtons()
+        void EnableButtons()
         {
             delOptionBut.IsEnabled = true;
             correctAnswerBut.IsEnabled = true;
         }
 
-        private void optionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ClearFields()
         {
-            turnOnButtons();
+            optionsLB.Items.Clear();
+            questionTBox.Text = "";
+            optionNameTBox.Text = "";
+        }
+
+        void AddQuestion()
+        {
+            int correctAnswerDbID = 0; // Переменная для ID правильного ответ (который присвоит база данных)
+            Questions question = new Questions()
+            {
+                Question = questionTBox.Text,
+                Answer_id = null,
+                Test_id = TestsService.addedTest.id
+
+            };
+            MainClass.db.Questions.Add(question);
+            MainClass.db.SaveChanges();
+
+            // Добавляем варианты ответа в соответствующую таблицу
+            for (int i = 0;i<optionsLB.Items.Count;i++)
+            {
+                Options option = new Options()
+                {
+                    Text = optionsLB.Items[i].ToString(),
+                    QuestionID = question.id
+                };
+                MainClass.db.Options.Add(option);
+                MainClass.db.SaveChanges();
+
+                if (i == correctAnswerIndex) // Запоминаем полученный ID для правильного ответа
+                    correctAnswerDbID = option.id;
+            }
+
+            question.Answer_id = correctAnswerDbID;
+            MainClass.db.SaveChanges();
         }
     }
 }

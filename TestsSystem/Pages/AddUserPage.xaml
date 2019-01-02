@@ -32,17 +32,17 @@
             <!-- Имя и Логин -->
             <StackPanel>
                 <TextBlock Text="Имя" Style="{StaticResource customMediumTbl}"/>
-                <TextBox x:Name="nameTBox" Style="{StaticResource blueTextBox}"/>
+                <TextBox x:Name="nameTBox" Style="{StaticResource blueTextBox}" TabIndex="1"/>
                 <TextBlock Text="Логин" Style="{StaticResource customMediumTbl}"/>
-                <TextBox x:Name="loginTBox" Style="{StaticResource blueTextBox}"/>
+                <TextBox x:Name="loginTBox" Style="{StaticResource blueTextBox}" TabIndex="3"/>
             </StackPanel>
             
             <!-- Фамилия и Пароль -->
             <StackPanel Grid.Column="2">
                 <TextBlock Text="Фамилия" Style="{StaticResource customMediumTbl}"/>
-                <TextBox x:Name="surnameTBox" Style="{StaticResource blueTextBox}"/>
+                <TextBox x:Name="surnameTBox" Style="{StaticResource blueTextBox}" TabIndex="2"/>
                 <TextBlock Text="Пароль" Style="{StaticResource customMediumTbl}"/>
-                <PasswordBox x:Name="passTBox" Style="{StaticResource bluePassBox}"/>
+                <PasswordBox x:Name="passTBox" Style="{StaticResource bluePassBox}" TabIndex="4"/>
             </StackPanel>
         </Grid>
         

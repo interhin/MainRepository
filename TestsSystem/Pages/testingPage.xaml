@@ -44,7 +44,7 @@
                      x:Name="optionsLB"
                      MaxHeight="150" 
                      Margin="0 10 0 0" 
-                     SelectedValue="{Binding selectedValueID}" 
+                     SelectedValue="{Binding selectedOptionID}" 
                      DisplayMemberPath="Text" 
                      SelectedValuePath="id" 
                      ItemContainerStyle="{StaticResource RadioButtonList}">

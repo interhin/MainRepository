@@ -8,6 +8,8 @@
         <SolidColorBrush x:Key="BlueBrush" Color="#1E88E5"/>
         <SolidColorBrush x:Key="BlueInactive" Color="#90CAF9"/>
         <SolidColorBrush x:Key="DarkBlueBrush" Color="#1565C0"/>
+        <SolidColorBrush x:Key="CorrectAnswerBrush" Color="#4CAF50"/>
+        <SolidColorBrush x:Key="CorrectAnswerHoverBrush" Color="#81C784"/>
 
         <!-- Button -->
         <Style x:Key="butStyle" TargetType="Button">
@@ -69,6 +71,40 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <!-- Стиль для правильного ответа -->
+        <Style x:Key="correctAnswerStyle" TargetType="ListBoxItem">
+            <Setter Property="Background" Value="{StaticResource CorrectAnswerBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border Background="{StaticResource CorrectAnswerBrush}"
+                                        Margin="{TemplateBinding Margin}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter TextBlock.Foreground="White"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border Background="{StaticResource CorrectAnswerHoverBrush}"
+                                        Margin="{TemplateBinding Margin}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter TextBlock.Foreground="White"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <!-- Базовый стиль для всех TextBlock (Цвет и Жирность) -->
@@ -140,7 +176,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="LimeGreen"/>
+                                <Setter Property="Background" Value="{StaticResource CorrectAnswerBrush}"/>
                                 <Setter Property="Foreground" Value="White"/>
                                 <Setter Property="BorderThickness" Value="1"/>
                                 <Setter Property="BorderBrush" Value="Black"/>

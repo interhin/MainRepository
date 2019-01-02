@@ -36,11 +36,13 @@ namespace TestsSystem.Pages
         private void addUserBut_Click(object sender, RoutedEventArgs e)
         {
             // Проверяем пустые ли поля
-            if (loginTBox.Text != "" && passTBox.Password != "" && nameTBox.Text != "" && surnameTBox.Text != "")
+            if (!String.IsNullOrWhiteSpace(loginTBox.Text) &&
+                !String.IsNullOrWhiteSpace(passTBox.Password) &&
+                !String.IsNullOrWhiteSpace(nameTBox.Text) &&
+                !String.IsNullOrWhiteSpace(surnameTBox.Text))
             {
                 // Проверяем зарегистрирован ли уже пользователь с таким логином
-                var sameUser = MainClass.db.Users.Where(x => x.Login == loginTBox.Text).FirstOrDefault();
-                if (sameUser == null)
+                if (!UsersService.SameLogin(loginTBox.Text))
                 {
                     Users user = new Users()
                     {
@@ -52,26 +54,30 @@ namespace TestsSystem.Pages
                     };
                     MainClass.db.Users.Add(user);
                     MainClass.db.SaveChanges();
-                    MessageBox.Show("Пользователь успешно добавлен!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageService.ShowInfo("Пользователь успешно добавлен!");
                     MainClass.FrameVar.Navigate(new AdminsMenuPage());
                 }
                 else
-                    MessageBox.Show("Пользователь с таким логином уже существует!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageService.ShowError("Пользователь с таким логином уже существует!");
             }
             else
-                MessageBox.Show("Заполните все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageService.ShowError("Заполните все поля");
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // Загрузка списка ролей
             List<Role> roles = new List<Role>();
+
             roles.Add(new Role() {RoleID = 0,RoleName = "Администратор" });
             roles.Add(new Role() { RoleID = 1, RoleName = "Учитель" });
             roles.Add(new Role() { RoleID = 2, RoleName = "Студент" });
+
             roleCB.DisplayMemberPath = "RoleName";
             roleCB.SelectedValuePath = "RoleID";
+
             roleCB.ItemsSource = roles;
+
             roleCB.SelectedIndex = 0;
         }
     }

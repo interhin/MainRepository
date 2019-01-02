@@ -22,12 +22,13 @@
         </Grid.RowDefinitions>
         
         <!-- Таблица пользователей -->
-        <DataGrid ColumnWidth="150" Margin="15" AutoGenerateColumns="False" x:Name="usersDG">
+        <DataGrid ColumnWidth="130" Margin="15" AutoGenerateColumns="False" x:Name="usersDG">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
                 <DataGridTextColumn Header="Пароль" Binding="{Binding Password}"/>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+                <DataGridTextColumn Header="Роль" Binding="{Binding Role}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="1" Margin="15">

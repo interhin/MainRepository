@@ -43,8 +43,10 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,22 +56,27 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\CalcService.cs" />
+    <Compile Include="Classes\MessageService.cs" />
+    <Compile Include="Classes\TestsService.cs" />
     <Compile Include="Converters\heightConverter.cs" />
     <Compile Include="Models\History.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Converters\widthConverter.cs" />
     <Compile Include="Models\Options.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestsModelAzure.Context.cs">
       <AutoGen>True</AutoGen>
@@ -108,13 +115,13 @@
       <DependentUpon>TestingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Questions.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tests.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TestsModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -132,7 +139,7 @@
       <DependentUpon>TestsModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Users.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -142,7 +149,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\CurrentUser.cs" />
+    <Compile Include="Classes\UsersService.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

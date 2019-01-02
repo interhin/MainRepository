@@ -30,15 +30,11 @@ namespace TestsSystem.Pages
         int currentQuestionNum = -1; // Счетчик текущего вопроса (начиная с 0)
         int passTime = 0;
         int questionTime = 0;
-        int QUESTION_TIME = 0;
-        int numToFive = 0;
-        int numToFour = 0;
-        int numToThree = 0;
-        int totalBalls = 0;
+        int totalBalls = 0; // Счетчик правильных ответов
         int answerID = 0;
 
-        // Выбранный вариант ответа
-        public int selectedValueID { get; set; }
+        // Выбранный вариант ответа (Привязан Binding'ом)
+        public int selectedOptionID { get; set; } = -1;
 
         // Список с вопросами
         List<Questions> questionsList = new List<Questions>();
@@ -52,11 +48,15 @@ namespace TestsSystem.Pages
         {
 
             // Загрузка данных о тесте и первого вопроса
-            LoadTestInfo();
-            LoadQuestion(++currentQuestionNum);
+            if (LoadTestInfo())
+            {
+                LoadQuestion(++currentQuestionNum);
 
-            SetTimers(); // Настройка таймеров
-            StartTimers();
+                SetTimers(); // Настройка таймеров
+                StartTimers();
+            }
+            else
+                MessageService.ShowError("Ошибка при загрузке информации о тесте");
         }
 
         private void QuestionTimer_Tick(object sender, EventArgs e)
@@ -84,22 +84,22 @@ namespace TestsSystem.Pages
 
         private void nextQuestBut_Click(object sender, RoutedEventArgs e)
         {
-            // Если ответ верный прибавляем баллы
-            if (selectedValueID == answerID)
-                totalBalls++;
-            ResetQuestionTime();
-            LoadQuestion(++currentQuestionNum);
+            if (selectedOptionID != -1)
+            {
+                // Если ответ верный прибавляем баллы
+                if (selectedOptionID == answerID)
+                    totalBalls++;
+                // Сбрасываем счетчик времени ответа на вопрос и загружаем следующий вопрос
+                ResetQuestionTime();
+                LoadQuestion(++currentQuestionNum);
+            }
+            else
+                MessageService.ShowWarning("Вы не выбрали вариант ответа");
         }
 
         void LoadQuestion(int questionNum)
         {
-            // Если кто-либо нажмет Назад после прохождения теста
-            if (questionNum > questionsList.Count)
-            {
-                MessageBox.Show("Тебе сюда нельзя!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                MainClass.FrameVar.Navigate(new StudentsMenuPage());
-            }
-            else if (questionNum < questionsList.Count) // Смотрим не вышли ли мы за пределы массива
+            if (questionNum < questionsList.Count) // Смотрим не вышли ли мы за пределы массива
             {
                     var currentQuestionID = questionsList[questionNum].id; // Узнаем ID вопроса чтобы найти его варианты ответа
                     questionTBl.Text = questionsList[questionNum].Question; // Сам вопрос
@@ -107,60 +107,86 @@ namespace TestsSystem.Pages
                     optionsLB.ItemsSource = MainClass.db.Options.Where(x => x.QuestionID == currentQuestionID).ToList(); // Грузим список в ListBox
             }
             else
-            {
-            CompleteTest();
-            }
+                CompleteTest();
         }
 
-        void LoadTestInfo()
+        bool LoadTestInfo()
         {
-            // Загружаем вопросы текущего теста
-            questionsList = MainClass.db.Questions.Where(x => x.Test_id == MainClass.testingTestID).ToList();
+            try {
+                // Загружаем вопросы текущего теста
+                questionsList = MainClass.db.Questions.Where(x => x.Test_id == TestsService.testingTest.id).ToList();
+            }
+            catch
+            {
+                return false;
+            }
 
             // Загружаем данные о тесте
-            var curTest = MainClass.db.Tests.Where(x => x.id == MainClass.testingTestID).First();
-            questionTime = QUESTION_TIME = (int)curTest.Question_time;
-            passTime = (int)curTest.Pass_time;
-
-            numToFive = curTest.Num_to_pass_five;
-            numToFour = curTest.Num_to_pass_four;
-            numToThree = curTest.Num_to_pass_three;
+            questionTime = TestsService.testingTest.Question_time;
+            passTime = TestsService.testingTest.Pass_time;
 
             // Вывод в заголовок имя теста
-            testNameTBl.Text = MainClass.testingTestName;
+            testNameTBl.Text = TestsService.testingTest.Test_name;
 
             UpdatePassTBox();
             UpdateQuestionTBox();
+            return true;
         }
 
         void CompleteTest()
         {
-            questionsList = null;
-            passTimer.Stop();
-            questionTimer.Stop();
 
+            int ball = CalcBall(totalBalls);
+
+            if (InsertToHistory(ball))
+            {
+                questionsList = null;
+                StopTimers();
+
+                MessageService.ShowInfo(String.Format("Тест окончен, правильных ответов: {0}, ваша оценка за тест: {1}", totalBalls, ball));
+
+                MainClass.disableBack = true; // Отключаем кнопку назад чтобы нельзя было пройти тест заного
+                MainClass.FrameVar.Navigate(new StudentsMenuPage());
+            }
+            else
+                MessageService.ShowError("Произошла ошибка при завершении теста!");
+        }
+
+        int CalcBall(int totalBalls)
+        {
             int ball = 0;
-            if (totalBalls >= numToFive)
+
+            if (totalBalls >= TestsService.testingTest.Num_to_pass_five)
                 ball = 5;
-            else if (totalBalls >= numToFour)
+            else if (totalBalls >= TestsService.testingTest.Num_to_pass_four)
                 ball = 4;
-            else if (totalBalls >= numToThree)
+            else if (totalBalls >= TestsService.testingTest.Num_to_pass_three)
                 ball = 3;
             else
                 ball = 2;
 
-            History history = new History()
+            return ball;
+        }
+
+        bool InsertToHistory(int ball)
+        {
+            try
             {
-                User_id = CurrentUser.curUser.id,
-                Test_id = MainClass.testingTestID,
-                Date = DateTime.Now,
-                Ball = ball
-            };
-            MainClass.disableBack = true;
-            MainClass.db.History.Add(history);
-            MainClass.db.SaveChanges();
-            MessageBox.Show(String.Format("Тест окончен, правильных ответов: {0}, ваша оценка за тест: {1}", totalBalls, ball), "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-            MainClass.FrameVar.Navigate(new StudentsMenuPage());
+                History history = new History()
+                {
+                    User_id = UsersService.currentUser.id,
+                    Test_id = TestsService.testingTest.id,
+                    Date = DateTime.Now,
+                    Ball = ball
+                };
+                MainClass.db.History.Add(history);
+                MainClass.db.SaveChanges();
+
+                return true;
+            } catch
+            {
+                return false;
+            }
         }
 
         void SetTimers()
@@ -178,25 +204,31 @@ namespace TestsSystem.Pages
             questionTimer.Start();
         }
 
+        void StopTimers()
+        {
+            passTimer.Stop();
+            questionTimer.Stop();
+        }
+
         void UpdatePassTBox()
         {
             passTimeTBl.Text = String.Format("Времени на вопрос: {0} часов {1} минут {2} секунд",
-                    (passTime / 3600),
-                    ((passTime % 3600) / 60),
-                    ((passTime % 3600) % 60));
+                    CalcService.CalcHours(passTime),
+                    CalcService.CalcMinutes(passTime),
+                    CalcService.CalcSeconds(passTime));
         }
 
         void UpdateQuestionTBox()
         {
             questionTimeTBl.Text = String.Format("Времени на тест: {0} часов {1} минут {2} секунд",
-                    (questionTime / 3600), // Часы
-                    ((questionTime % 3600) / 60), // Минуты
-                    ((questionTime % 3600) % 60)); // Секунды
+                    CalcService.CalcHours(questionTime),
+                    CalcService.CalcMinutes(questionTime),
+                    CalcService.CalcSeconds(questionTime));
         }
 
         void ResetQuestionTime()
         {
-            questionTime = QUESTION_TIME;
+            questionTime = TestsService.testingTest.Question_time;
             UpdateQuestionTBox();
         }
 

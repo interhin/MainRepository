@@ -31,10 +31,10 @@ namespace TestsSystem.Pages
             MainClass.disableBack = false;
             Users user = new Users();
             // Проверяем введенные данные
-            if (CheckUser(loginTBox.Text,passTBox.Password,ref user))
+            if (UsersService.CheckAuth(loginTBox.Text,passTBox.Password,ref user))
             {
                 // Если вошли то добавляем пользователя в публичный класс чтобы запомнить какой пользователь вошёл
-                CurrentUser.curUser = user;
+                UsersService.currentUser = user;
                 // Проверяем кто вошел (0 - Админ, 1 - Учитель, 2 - Студент) 
                 switch (user.Role) {
                     case 0:
@@ -50,18 +50,9 @@ namespace TestsSystem.Pages
             }
             else
             {
-                MessageBox.Show("Неверный логин или пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageService.ShowError("Неверный логин или пароль!");
             }
         }
 
-        bool CheckUser(String Login, String Password, ref Users user)
-        {
-            user = MainClass.db.Users.Where(x => x.Login == loginTBox.Text && x.Password == passTBox.Password).FirstOrDefault();
-
-            if (user == null)
-                return false;
-
-            return true;
-        }
     }
 }

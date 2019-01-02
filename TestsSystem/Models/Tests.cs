@@ -24,7 +24,7 @@ namespace TestsSystem.Models
         public int id { get; set; }
         public string Test_name { get; set; }
         public int Author_id { get; set; }
-        public long Pass_time { get; set; }
+        public int Pass_time { get; set; }
         public int Question_time { get; set; }
         public int Num_to_pass_five { get; set; }
         public int Num_to_pass_four { get; set; }

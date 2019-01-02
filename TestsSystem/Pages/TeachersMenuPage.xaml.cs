@@ -29,15 +29,15 @@ namespace TestsSystem.Pages
         private void createTestBut_Click(object sender, RoutedEventArgs e)
         {
             // Говорим что мы не редактируем а создаем тест и открываем страницу создания
-            MainClass.editingTest = false;
+            TestsService.isEditingTest = false;
             MainClass.FrameVar.Navigate(new CreateEditTestPage());
         }
 
         private void editTestBut_Click(object sender, RoutedEventArgs e)
         {
             // Говорим что мы редактируем тест, запоминаем его ID и открываем страницу редактирования
-            MainClass.editingTest = true;
-            MainClass.editingTestID = Convert.ToInt32(testsCB.SelectedValue);
+            TestsService.isEditingTest = true;
+            TestsService.editingTest = testsCB.SelectedItem as Tests;
             MainClass.FrameVar.Navigate(new CreateEditTestPage());
         }
 
@@ -45,28 +45,28 @@ namespace TestsSystem.Pages
         {
             // Загружаем список тестов пользователя и отключаем кнопки
             LoadTests();
-            TurnOffButs();
+            DisableButs();
         }
 
         private void testsCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TurnOnButs();
+            EnableButs();
         }
 
         private void editTestsQuestionsBut_Click(object sender, RoutedEventArgs e)
         {
             // Запоминаем ID теста и открываем страницу редактирования вопросов
-            MainClass.editingTestID = Convert.ToInt32(testsCB.SelectedValue);
+            TestsService.editingTest = testsCB.SelectedItem as Tests;
             MainClass.FrameVar.Navigate(new EditTestsQuestionsPage());
         }
 
-        void TurnOffButs()
+        void DisableButs()
         {
             editTestBut.IsEnabled = false;
             editTestsQuestionsBut.IsEnabled = false;
         }
         
-        void TurnOnButs()
+        void EnableButs()
         {
             editTestBut.IsEnabled = true;
             editTestsQuestionsBut.IsEnabled = true;
@@ -74,7 +74,7 @@ namespace TestsSystem.Pages
 
         void LoadTests()
         {
-            testsCB.ItemsSource = MainClass.db.Tests.Where(x => x.Author_id == CurrentUser.curUser.id).ToList();
+            testsCB.ItemsSource = MainClass.db.Tests.Where(x => x.Author_id == UsersService.currentUser.id).ToList();
             testsCB.DisplayMemberPath = "Test_name";
             testsCB.SelectedValuePath = "id";
             testsCB.SelectedIndex = -1;

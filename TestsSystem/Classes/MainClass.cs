@@ -6,60 +6,30 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using TestsSystem.Pages;
 using TestsSystem.Models;
+using System.Windows;
 
 namespace TestsSystem
 {
-    public class MainClass
+    public static class MainClass
     {
         public static Tests_bdEntities db = new Tests_bdEntities(); // Экземпляр БД
 
-        public static string addedTestName { get; set; } // Имя добавленного теста
-        public static int addedTestID { get; set; } // ID добавленного теста
-
         public static Frame FrameVar;
-
-        public static bool editingTest { get; set; } = false; // Проходит ли редактирование теста
-        public static int editingTestID { get; set; } // ID Теста который редактируется
-
-        public static int testingTestID { get; set; } // ID Теста который проходится в данный момент
-        public static string testingTestName { get; set; } // Имя Теста который проходится в данный момент
 
         public static bool disableBack { get; set; } = false;
 
-        public static int HoursToSeconds(int seconds)
+        public static void DisableGlowAllItems(ref ListBox listbox)
         {
-            return seconds * 3600;
+            foreach (var item in listbox.Items)
+            {
+                (listbox.ItemContainerGenerator.ContainerFromItem(item) as ListBoxItem).Style = null;
+            }
         }
 
-        public static int MinutesToSeconds(int seconds)
+        public static void GlowSelectedItem(ref ListBox listbox)
         {
-            return seconds * 60;
+            var correctStyle = Application.Current.FindResource("correctAnswerStyle") as Style;
+            (listbox.ItemContainerGenerator.ContainerFromItem(listbox.SelectedItem) as ListBoxItem).Style = correctStyle;
         }
-
-        public static int HoursToSeconds(string seconds)
-        {
-            return Convert.ToInt32(seconds) * 3600;
-        }
-
-        public static int MinutesToSeconds(string seconds)
-        {
-            return Convert.ToInt32(seconds) * 60;
-        }
-
-        public static int CalcHours(int seconds)
-        {
-            return seconds / 3600;
-        }
-
-        public static int CalcMinutes(int seconds)
-        {
-            return (seconds % 3600) / 60;
-        }
-
-        public static int CalcSeconds(int seconds)
-        {
-            return (seconds % 3600) % 60;
-        }
-
     }
 }

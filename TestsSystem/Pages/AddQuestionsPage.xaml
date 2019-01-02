@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TestsSystem.Pages"
       mc:Ignorable="d" 
-      MinHeight="450"
+      MinHeight="400"
       MinWidth="700"
       Style="{StaticResource pageFont}"
       Title="Добавление вопроса" Loaded="Page_Loaded">
@@ -46,12 +46,12 @@
                     Content="Добавить"/>
             
             <!-- Отдельный Grid для кнопок Удалить и Сделать правильным чтобы они были 50% от ширины родителя -->
-            <Grid>
+            <Grid Margin="0 0 0 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <!-- Удалить -->
                 <Button IsEnabled="False"
                         Style="{StaticResource butStyle}"
@@ -59,7 +59,7 @@
                         Click="delOptionBut_Click"
                         Content="Удалить"
                         Margin="0 5 5 0"/>
-                
+
                 <!-- Сделать правильным -->
                 <Button IsEnabled="False"
                         Grid.Column="1"
@@ -69,16 +69,7 @@
                         Content="Сделать правильным" 
                         Margin="5 5 0 0"/>
             </Grid>
-            
-            <!-- Правильный вариант ответа -->
-            <StackPanel HorizontalAlignment="Center" Margin="5" Orientation="Horizontal">
-                <TextBlock Style="{StaticResource customMediumTBl}" Text="Правильный вариант ответа:"/>
-                <TextBlock Style="{StaticResource customMediumTBl}"
-                           x:Name="correctAnswerTBl"
-                           VerticalAlignment="Center"
-                           Text="Не выбран"/>
-            </StackPanel>
-            
+
             <!-- Добавить вопрос -->
             <Button Style="{StaticResource butStyle}"
                     x:Name="addQuestionBut" 

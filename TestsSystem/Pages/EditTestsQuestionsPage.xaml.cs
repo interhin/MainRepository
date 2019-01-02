@@ -21,6 +21,12 @@ namespace TestsSystem.Pages
     /// </summary>
     public partial class EditTestsQuestionsPage : Page
     {
+        Questions selectedQuestion = null;
+        Options selectedOption = null;
+        string unselectedQuestion = "Вы не выбрали вопрос!";
+        string unselectedOption = "Вы не выбрали вариант ответа";
+        string unselectedQuestOrOption = "Вы не выбрали вопрос или вариант ответа!";
+
         public EditTestsQuestionsPage()
         {
             InitializeComponent();
@@ -29,138 +35,195 @@ namespace TestsSystem.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // Загружаем все вопросы теста
-            LoadQuestions();
+            questionsLB.DisplayMemberPath = "Question";
+            questionsLB.SelectedValuePath = "id";
+            optionsLB.DisplayMemberPath = "Text";
+            optionsLB.SelectedValuePath = "id";
+            try
+            {
+                LoadQuestions();
+            } catch
+            {
+                MessageService.ShowError("Ошибка при загрузке вопросов!");
+            }
         }
 
         private void questionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Если мы выбрали другой вопрос то подгружаем его варианты, заполняем поле Изменить и отключаем кнопки
-            LoadSelQuestOptions();
-            addOptionBut.IsEnabled = true;
-            TurnOnQuestionsBut();
-            TurnOffOptionsBut();
-            if (questionsLB.SelectedItem != null)
-                editQuestionTBox.Text = (questionsLB.SelectedItem as Questions).Question;
+            selectedQuestion = questionsLB.SelectedItem as Questions;
+            // Исключение на случай если удаляем вопрос (это событие срабатывает когда выбранный вопрос удаляется)
+            if (selectedQuestion != null)
+            {
+                LoadSelQuestOptions(); // Загружаем варианты ответа выбранного вопроса
+                editQuestionTBox.Text = selectedQuestion.Question; // Выводим в поле изменения сам вопрос
+                addOptionBut.IsEnabled = true; // Включаем кнопку добавить вариант ответа
+                EnableQuestionsBut(); // Включаем кнопки изменить и удалить вопрос
+            }
+            selectedOption = null;
+            DisableOptionsBut(); // Отключаем кнопки изменить, удалить и сделать правильным т.к. при смене вопроса вариант не выбран
         }
 
 
         private void optionsLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Включаем кнопки если был выбран вариант ответа и заполняем поле Изменить
-            TurnOnOptionsBut();
-            if (optionsLB.SelectedItem != null)
-                editOptionTBox.Text = (optionsLB.SelectedItem as Options).Text;
+            selectedOption = optionsLB.SelectedItem as Options;
+            if (selectedOption != null)
+            {
+                EnableOptionsBut(); // Включаем кнопки изменить, удалить и сделать правильным
+
+                editOptionTBox.Text = selectedOption.Text;  // Выводим в поле измения сам вариант ответа
+            }
         }
 
         private void delQuestionBut_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Вы уверены что хотите удалить этот вопрос?","Внимание",MessageBoxButton.YesNo,MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageService.ShowYesNoWarning("Вы уверены что хотите удалить этот вопрос?") == MessageBoxResult.Yes)
             {
                 // Удаляем выбранный вопрос
-                int selId = Convert.ToInt32(questionsLB.SelectedValue);
-                var selQuest = MainClass.db.Questions.Where(x => x.id == selId).First();
-                MainClass.db.Questions.Remove(selQuest);
-                MainClass.db.SaveChanges();
+                if (selectedQuestion != null)
+                {
+                    MainClass.db.Questions.Attach(selectedQuestion);
+                    MainClass.db.Questions.Remove(selectedQuestion);
+                    MainClass.db.SaveChanges();
 
-                LoadQuestions(); // Обновляем список вопросов
+                    LoadQuestions(); // Обновляем список вопросов
+                }
+                else
+                    MessageService.ShowWarning(unselectedQuestion);
             }
         }
 
         private void addQuestionBut_Click(object sender, RoutedEventArgs e)
         {
             // Добавляем вопрос с введнным именем
-            Questions questionVar = new Questions()
+            if (!String.IsNullOrWhiteSpace(questionNameTBox.Text))
             {
-                Question = questionNameTBox.Text,
-                Answer_id = null,
-                Test_id = MainClass.editingTestID
-            };
-            MainClass.db.Questions.Add(questionVar);
-            MainClass.db.SaveChanges();
+                Questions question = new Questions()
+                {
+                    Question = questionNameTBox.Text,
+                    Answer_id = null,
+                    Test_id = TestsService.editingTest.id
+                };
+                MainClass.db.Questions.Add(question);
+                MainClass.db.SaveChanges();
 
-            LoadQuestions(); // Обновляем список вопросов
+                LoadQuestions(); // Обновляем список вопросов
+            }
         }
 
         private void delOptionBut_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Вы уверены что хотите удалить этот вариант ответа?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageService.ShowYesNoWarning("Вы уверены что хотите удалить этот вариант ответа?") == MessageBoxResult.Yes)
             {
                 // Удаляем выбранный вариант ответа
-                int selId = Convert.ToInt32(optionsLB.SelectedValue);
-                var selOption = MainClass.db.Options.Where(x => x.id == selId).First();
-                MainClass.db.Options.Remove(selOption);
-                MainClass.db.SaveChanges();
-                LoadSelQuestOptions(); // Обновляем список вариантов ответа
-                TurnOffOptionsBut(); // Отключаем кнопки Удалить и Сделать правильным
+                if (selectedOption != null)
+                {
+                    MainClass.db.Options.Attach(selectedOption);
+                    MainClass.db.Options.Remove(selectedOption);
+                    MainClass.db.SaveChanges();
+                    LoadSelQuestOptions(); // Обновляем список вариантов ответа
+                    DisableOptionsBut(); // Отключаем кнопки Удалить и Сделать правильным
+                }
+                else
+                    MessageService.ShowWarning(unselectedOption);
             }
         }
 
         private void editQuestionBut_Click(object sender, RoutedEventArgs e)
         {
             // Изменяем текст вопроса
-            (questionsLB.SelectedItem as Questions).Question = editQuestionTBox.Text;
-            MainClass.db.SaveChanges();
+            if (selectedQuestion != null)
+            {
+                if (!String.IsNullOrWhiteSpace(editQuestionTBox.Text))
+                {
+                    selectedQuestion.Question = editQuestionTBox.Text;
+                    MainClass.db.SaveChanges();
 
-            LoadQuestions();
+                    LoadQuestions();
+                }
+            }
+            else
+                MessageService.ShowWarning(unselectedQuestion);
         }
 
         private void addOptionBut_Click(object sender, RoutedEventArgs e)
         {
             // Добавляем вариант ответа к выбранному вопросу
-            int selId = Convert.ToInt32(questionsLB.SelectedValue);
-            var optionVar = MainClass.db.Options.Add(new Options()
+            if (selectedQuestion != null)
             {
-                Text = optionNameTBox.Text,
-                QuestionID = selId
-            });
-            MainClass.db.SaveChanges();
+                if (!String.IsNullOrWhiteSpace(optionNameTBox.Text))
+                {
+                    var optionVar = MainClass.db.Options.Add(new Options()
+                    {
+                        Text = optionNameTBox.Text,
+                        QuestionID = selectedQuestion.id
+                    });
+                    MainClass.db.SaveChanges();
 
-            LoadSelQuestOptions(); // Обновляем список вариантов ответа
+                    LoadSelQuestOptions(); // Обновляем список вариантов ответа
+                }
+            }
+            else
+                MessageService.ShowWarning(unselectedQuestion);
         }
 
         private void makeCorrectBut_Click(object sender, RoutedEventArgs e)
         {
             // Делаем выбранный вариант ответа правильным
-            int selId = Convert.ToInt32(questionsLB.SelectedValue);
-            var selQuest = MainClass.db.Questions.Where(x => x.id == selId).First();
-            selQuest.Answer_id = Convert.ToInt32(optionsLB.SelectedValue);
-            MainClass.db.SaveChanges();
-            MessageBox.Show("Выбранный вариант помечен как правильный!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (selectedQuestion != null && selectedOption != null)
+            {
+                MainClass.db.Questions.Attach(selectedQuestion);
+                selectedQuestion.Answer_id = selectedOption.id;
+                MainClass.db.SaveChanges();
+                MessageService.ShowInfo("Выбранный вариант помечен как правильный!");
+                LoadSelQuestOptions();
+            }
+            else
+                MessageService.ShowWarning(unselectedQuestOrOption);
         }
 
 
         private void editOptionBut_Click(object sender, RoutedEventArgs e)
         {
             // Изменяем текст варианта ответа
-            (optionsLB.SelectedItem as Options).Text = editOptionTBox.Text;
-            MainClass.db.SaveChanges();
+            if (selectedOption != null)
+            {
+                if (!String.IsNullOrWhiteSpace(editOptionTBox.Text))
+                {
+                    MainClass.db.Options.Attach(selectedOption);
+                    selectedOption.Text = editOptionTBox.Text;
+                    MainClass.db.SaveChanges();
 
-            LoadSelQuestOptions();
+                    LoadSelQuestOptions();
+                }
+            }
+            else
+                MessageService.ShowWarning(unselectedOption);
         }
 
-        // Отключения и включания кнопок
+        // Отключения и включения кнопок
 
-        void TurnOnOptionsBut()
+        void EnableOptionsBut()
         {
             delOptionBut.IsEnabled = true;
             editOptionBut.IsEnabled = true;
             makeCorrectBut.IsEnabled = true;
         }
 
-        void TurnOffOptionsBut()
+        void DisableOptionsBut()
         {
             delOptionBut.IsEnabled = false;
             editOptionBut.IsEnabled = false;
             makeCorrectBut.IsEnabled = false;
         }
 
-        void TurnOnQuestionsBut()
+        void EnableQuestionsBut()
         {
             delQuestionBut.IsEnabled = true;
             editQuestionBut.IsEnabled = true;
         }
 
-        void TurnOffQuestionsBut()
+        void DisableQuestionsBut()
         {
             delQuestionBut.IsEnabled = false;
             editQuestionBut.IsEnabled = false;
@@ -169,21 +232,29 @@ namespace TestsSystem.Pages
         void LoadQuestions()
         {
             // Загрузка всех вопросов выбранного теста
-            questionsLB.DisplayMemberPath = "Question";
-            questionsLB.SelectedValuePath = "id";
-            questionsLB.ItemsSource = MainClass.db.Questions.Where(x => x.Test_id == MainClass.editingTestID).ToList();
+            questionsLB.ItemsSource = MainClass.db.Questions.Where(x => x.Test_id == TestsService.editingTest.id).ToList();
         }
 
         void LoadSelQuestOptions()
         {
             // Загрузка всех вариантов ответа выбранного вопроса
-            int selId = Convert.ToInt32(questionsLB.SelectedValue);
-            if (selId != 0)
+            optionsLB.ItemsSource = MainClass.db.Options.Where(x => x.QuestionID == selectedQuestion.id).ToList();
+            GlowCorrectItem();
+        }
+
+        void GlowCorrectItem()
+        {
+            if (selectedQuestion != null)
             {
-                var optionsListVar = MainClass.db.Options.Where(x => x.QuestionID == selId).ToList();
-                optionsLB.DisplayMemberPath = "Text";
-                optionsLB.SelectedValuePath = "id";
-                optionsLB.ItemsSource = optionsListVar; // Обновляем список вопросов
+                for (int i = 0; i < optionsLB.Items.Count; i++)
+                {
+                    if ((optionsLB.Items[i] as Options).id == selectedQuestion.Answer_id)
+                    {
+                        optionsLB.UpdateLayout(); // ?? (Нашёл в инете решение, без него ContainerFromItem возвращает null)
+                        var correctStyle = Application.Current.FindResource("correctAnswerStyle") as Style;
+                        (optionsLB.ItemContainerGenerator.ContainerFromItem(optionsLB.Items[i]) as ListBoxItem).Style = correctStyle;
+                    }
+                }
             }
         }
     }
