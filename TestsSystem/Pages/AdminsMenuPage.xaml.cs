@@ -62,6 +62,7 @@ namespace TestsSystem.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             usersDG.ItemsSource = MainClass.db.Users.ToList(); // Загружаем пользователей в таблицу
+            rolesCB.ItemsSource = MainClass.db.Roles.ToList();
         }
     }
 }

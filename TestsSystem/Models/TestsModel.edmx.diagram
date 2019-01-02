@@ -16,6 +16,8 @@
         <AssociationConnector Association="Tests_bdModel.FK_Options_Questions" ManuallyRouted="false" />
         <AssociationConnector Association="Tests_bdModel.FK_Questions_Tests" ManuallyRouted="false" />
         <AssociationConnector Association="Tests_bdModel.FK_Tests_Users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Tests_bdModel.Roles" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="Tests_bdModel.FK_Users_Roles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

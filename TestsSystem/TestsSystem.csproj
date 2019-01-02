@@ -96,6 +96,9 @@
     <Compile Include="Models\Options.cs">
       <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Roles.cs">
+      <DependentUpon>TestsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TestsModelAzure.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TestsSystem.Pages"
+      xmlns:models="clr-namespace:TestsSystem.Models"
       mc:Ignorable="d" 
       MinWidth="800"
       MinHeight="450"
@@ -28,7 +29,13 @@
                 <DataGridTextColumn Header="Пароль" Binding="{Binding Password}"/>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
-                <DataGridTextColumn Header="Роль" Binding="{Binding Role}"/>
+                <DataGridComboBoxColumn Validation.ErrorTemplate="{x:Null}"
+                                        x:Name="rolesCB"
+                                        Header="Роль" 
+                                        DisplayMemberPath="Name"
+                                        SelectedValuePath="id"
+                                        SelectedValueBinding="{Binding Role, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                </DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="1" Margin="15">

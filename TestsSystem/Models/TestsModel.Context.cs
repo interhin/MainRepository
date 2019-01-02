@@ -31,5 +31,6 @@ namespace TestsSystem.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tests> Tests { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
     }
 }

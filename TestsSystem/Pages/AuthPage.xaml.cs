@@ -35,15 +35,15 @@ namespace TestsSystem.Pages
             {
                 // Если вошли то добавляем пользователя в публичный класс чтобы запомнить какой пользователь вошёл
                 UsersService.currentUser = user;
-                // Проверяем кто вошел (0 - Админ, 1 - Учитель, 2 - Студент) 
+                // Проверяем кто вошел (1 - Админ, 2 - Учитель, 3 - Студент) 
                 switch (user.Role) {
-                    case 0:
+                    case 1:
                         MainClass.FrameVar.Navigate(new AdminsMenuPage());
                         break;
-                    case 1:
+                    case 2:
                         MainClass.FrameVar.Navigate(new TeachersMenuPage());
                         break;
-                    case 2:
+                    case 3:
                         MainClass.FrameVar.Navigate(new StudentsMenuPage());
                         break;
                 }
