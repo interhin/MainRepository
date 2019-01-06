@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TestsSystem.Pages"
+      xmlns:valids="clr-namespace:TestsSystem.Validations"
       mc:Ignorable="d" 
       MinHeight="250"
       MinWidth="550"
@@ -16,17 +17,26 @@
             <TextBlock Style="{StaticResource mediumTBlStyle}"
                        Text="Логин:"
                        HorizontalAlignment="Center"/>
-            <TextBox Style="{StaticResource blueTextBox}" 
-                     Text="teacher" 
+            <TextBox Style="{StaticResource blueTextBox}"
                      Margin="5" 
-                     x:Name="loginTBox"/>
-            
+                     x:Name="loginTBox">
+
+                <TextBox.Text>
+                    <Binding Path="Login">
+                        <Binding.ValidationRules>
+                            <valids:EmptyRule/>
+                            <DataErrorValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
             <!-- Пароль -->
             <TextBlock Style="{StaticResource mediumTBlStyle}"
                        Text="Пароль:"
                        HorizontalAlignment="Center"/>
             <PasswordBox Style="{StaticResource bluePassBox}"
-                         Password="123" 
+                         Password=""
                          Margin="5"
                          x:Name="passTBox"/>
             
@@ -36,6 +46,20 @@
                     Content="Войти" 
                     x:Name="AuthBut" 
                     Click="AuthBut_Click"/>
+            <!--<Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=loginTBox}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>-->
         </StackPanel>
     </Grid>
 </Page>

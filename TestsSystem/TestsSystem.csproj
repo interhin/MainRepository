@@ -144,6 +144,8 @@
     <Compile Include="Pages\TestingPage.xaml.cs">
       <DependentUpon>TestingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Validations\EmptyRule.cs" />
+    <Compile Include="Validations\Users.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -24,6 +24,7 @@ namespace TestsSystem.Pages
         public AuthPage()
         {
             InitializeComponent();
+            this.DataContext = MainClass.db.Users.ToList();
         }
 
         private void AuthBut_Click(object sender, RoutedEventArgs e)

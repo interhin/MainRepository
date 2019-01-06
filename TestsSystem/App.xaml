@@ -46,6 +46,18 @@
             </Setter>
         </Style>
         
+        <!-- Validation ToolTip TextBox -->
+        <Style x:Key="validToolTipStyle" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self},
+                    Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <!-- Buttons Назад / Выход -->
         <Style x:Key="backHomeButs" TargetType="Button">
             <Setter Property="Template">
@@ -137,7 +149,7 @@
         </Style>
 
         <!-- TextBox -->
-        <Style TargetType="TextBox" x:Key="blueTextBox">
+        <Style TargetType="TextBox" BasedOn="{StaticResource validToolTipStyle}" x:Key="blueTextBox">
             <Setter Property="Foreground" Value="{StaticResource DarkBlueBrush}"/>
             <Setter Property="Padding" Value="0 2"/>
             <Setter Property="TextBlock.FontSize" Value="14"/>
