@@ -79,5 +79,10 @@ namespace TestsSystem.Pages
             testsCB.SelectedValuePath = "id";
             testsCB.SelectedIndex = -1;
         }
+
+        private void importTestBut_Click(object sender, RoutedEventArgs e)
+        {
+            MainClass.FrameVar.Navigate(new ImportTestPage());
+        }
     }
 }

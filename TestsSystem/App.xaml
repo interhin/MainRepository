@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:TestsSystem"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:theme="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Pages/ImportTestPage.xaml">
     <Application.Resources>
         <!-- Цвета -->
         <SolidColorBrush x:Key="BlueBrush" Color="#1E88E5"/>
@@ -54,7 +54,7 @@
                         <Border
                             Name="border"
                             BorderBrush="White"
-                            BorderThickness="1"
+                            BorderThickness="0"
                             CornerRadius="5"
                             Padding="0 4"
                             Background="{StaticResource BlueBrush}">
@@ -63,12 +63,13 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Opacity" Value="0.8"/>
+                                <Setter Property="Background" TargetName="border" Value="#42A5F5"/>
                                 <Setter Property="Cursor" Value="Hand"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource BlueInactive}"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource BlueInactive}"/>
-                                
+                                <!--<Setter TargetName="border" Property="Background" Value="{StaticResource BlueInactive}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource BlueInactive}"/>-->
+                                <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

@@ -9,6 +9,7 @@
       MinWidth="500"
       Style="{StaticResource pageFont}"
       Title="Меню" Loaded="Page_Loaded">
+
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="15">
             
@@ -33,10 +34,17 @@
             
             <!-- Создать тест -->
             <Button Style="{StaticResource butStyle}"
-                    Margin="5 30"
+                    Margin="5 30 0 10"
                     Content="Создать тест"
                     x:Name="createTestBut" 
                     Click="createTestBut_Click"/>
+            
+            <!-- Импорт теста -->
+            <Button Style="{StaticResource butStyle}"
+                    x:Name="importTestBut"
+                    Click="importTestBut_Click"
+                    Content="Импортировать тест"
+                    Margin="5 0"/>
         </StackPanel>
     </Grid>
 </Page>
