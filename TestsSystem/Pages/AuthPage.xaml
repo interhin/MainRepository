@@ -35,7 +35,7 @@
                     Margin="5"
                     Content="Войти" 
                     x:Name="AuthBut" 
-                    Click="AuthBut_Click"/>
+                    Click="AuthBut_Click" FontSize="24"/>
         </StackPanel>
     </Grid>
 </Page>

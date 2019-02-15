@@ -8,24 +8,24 @@ namespace TestsSystem
 {
     public static class CalcService
     {
-        public static int HoursToSeconds(int seconds)
+        public static int HoursToSeconds(int hours)
         {
-            return seconds * 3600;
+            return hours * 3600;
         }
 
-        public static int MinutesToSeconds(int seconds)
+        public static int MinutesToSeconds(int minutes)
         {
-            return seconds * 60;
+            return minutes * 60;
         }
 
-        public static int HoursToSeconds(string seconds)
+        public static int HoursToSeconds(string hours)
         {
-            return Convert.ToInt32(seconds) * 3600;
+            return int.Parse(hours) * 3600;
         }
 
-        public static int MinutesToSeconds(string seconds)
+        public static int MinutesToSeconds(string minutes)
         {
-            return Convert.ToInt32(seconds) * 60;
+            return int.Parse(minutes) * 60;
         }
 
         public static int CalcHours(int seconds)

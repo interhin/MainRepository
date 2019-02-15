@@ -29,6 +29,7 @@ namespace TestsSystem.Models
         public virtual DbSet<Options> Options { get; set; }
         public virtual DbSet<Questions> Questions { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tests> Tests { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }

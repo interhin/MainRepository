@@ -40,6 +40,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -88,40 +92,45 @@
     <Compile Include="Classes\CalcService.cs" />
     <Compile Include="Classes\MessageService.cs" />
     <Compile Include="Classes\TestsService.cs" />
+    <Compile Include="Classes\WordQuestions.cs" />
+    <Compile Include="Classes\WordTest.cs" />
     <Compile Include="Converters\heightConverter.cs" />
     <Compile Include="Converters\widthConverter.cs" />
     <Compile Include="Models\History.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Options.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Questions.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Roles.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tests.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TestsModelAzure.Context.cs">
+    <Compile Include="Models\TestsModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestsModelAzure.Context.tt</DependentUpon>
+      <DependentUpon>TestsModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TestsModelAzure.cs">
+    <Compile Include="Models\TestsModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TestsModelAzure.Designer.cs">
+    <Compile Include="Models\TestsModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TestsModelAzure.edmx</DependentUpon>
+      <DependentUpon>TestsModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Users.cs">
-      <DependentUpon>TestsModelAzure.tt</DependentUpon>
+      <DependentUpon>TestsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Pages\AddQuestionsPage.xaml.cs">
       <DependentUpon>AddQuestionsPage.xaml</DependentUpon>
@@ -137,6 +146,9 @@
     </Compile>
     <Compile Include="Pages\EditTestsQuestionsPage.xaml.cs">
       <DependentUpon>EditTestsQuestionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ImportTestPage.xaml.cs">
+      <DependentUpon>ImportTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StudentsMenuPage.xaml.cs">
       <DependentUpon>StudentsMenuPage.xaml</DependentUpon>
@@ -181,6 +193,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ImportTestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\TeachersMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -219,12 +235,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Models\TestsModelAzure.edmx">
+    <EntityDeploy Include="Models\TestsModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TestsModelAzure.Designer.cs</LastGenOutput>
+      <LastGenOutput>TestsModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\TestsModelAzure.edmx.diagram">
-      <DependentUpon>TestsModelAzure.edmx</DependentUpon>
+    <None Include="Models\TestsModel.edmx.diagram">
+      <DependentUpon>TestsModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -233,21 +249,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="Models\TestsModelAzure.Context.tt">
+    <Content Include="Models\TestsModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestsModelAzure.edmx</DependentUpon>
-      <LastGenOutput>TestsModelAzure.Context.cs</LastGenOutput>
+      <DependentUpon>TestsModel.edmx</DependentUpon>
+      <LastGenOutput>TestsModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\TestsModelAzure.tt">
+    <Content Include="Models\TestsModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TestsModelAzure.edmx</DependentUpon>
-      <LastGenOutput>TestsModelAzure.cs</LastGenOutput>
+      <DependentUpon>TestsModel.edmx</DependentUpon>
+      <LastGenOutput>TestsModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,11 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e9c3d2a7cd1443709d253a7b14385820" Name="Diagram1">
+      <Diagram DiagramId="bb698b5f79374dd3b361d37c8e195feb" Name="Diagram1">
         <EntityTypeShape EntityType="TestsDBModel.History" Width="1.5" PointX="7.5" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestsDBModel.Options" Width="1.5" PointX="9.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TestsDBModel.Questions" Width="1.5" PointX="7.5" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="TestsDBModel.Roles" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestsDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestsDBModel.Tests" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestsDBModel.Users" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
         <AssociationConnector Association="TestsDBModel.FK_History_Tests" ManuallyRouted="false" />
