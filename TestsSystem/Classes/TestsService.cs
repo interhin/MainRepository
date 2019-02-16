@@ -13,5 +13,6 @@ namespace TestsSystem
         public static Tests editingTest { get; set; } // Тест который редактируется
         public static Tests testingTest { get; set; } // Тест который проходится
         public static bool isEditingTest { get; set; } = false; // Редактируется ли сейчас тест
+        public static bool isImportingTest { get; set; }
     }
 }

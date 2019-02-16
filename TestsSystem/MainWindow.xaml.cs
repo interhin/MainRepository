@@ -35,6 +35,18 @@ namespace TestsSystem
             backBut.IsEnabled = MainClass.disableBack == true ? false : frame.CanGoBack;
             homeBut.IsEnabled = !(frame.Content is Pages.AuthPage);
 
+            if (!(frame.Content is Pages.AuthPage)
+                && !(frame.Content is Pages.TeachersMenuPage)
+                && !(frame.Content is Pages.StudentsMenuPage)
+                && !(frame.Content is Pages.AdminsMenuPage))
+            {
+                backToMenuBut.IsEnabled = true;
+            }
+            else
+            {
+                backToMenuBut.IsEnabled = false;
+            }
+
         }
 
         private void homeBut_Click(object sender, RoutedEventArgs e)
@@ -66,5 +78,20 @@ namespace TestsSystem
             this.Top = (h - NewSize.Height) / 2;
         }
 
+        private void backToMenuBut_Click(object sender, RoutedEventArgs e)
+        {
+            switch (UsersService.currentUser.RoleID)
+            {
+                case 1:
+                    frame.Navigate(new Pages.AdminsMenuPage());
+                    break;
+                case 2:
+                    frame.Navigate(new Pages.TeachersMenuPage());
+                    break;
+                case 3:
+                    frame.Navigate(new Pages.StudentsMenuPage());
+                    break;
+            }
+        }
     }
 }

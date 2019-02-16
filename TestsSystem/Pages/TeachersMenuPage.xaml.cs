@@ -30,6 +30,7 @@ namespace TestsSystem.Pages
         {
             // Говорим что мы не редактируем а создаем тест и открываем страницу создания
             TestsService.isEditingTest = false;
+            TestsService.isImportingTest = false;
             MainClass.FrameVar.Navigate(new CreateEditTestPage());
         }
 
@@ -38,6 +39,7 @@ namespace TestsSystem.Pages
             // Говорим что мы редактируем тест, запоминаем его ID и открываем страницу редактирования
             TestsService.isEditingTest = true;
             TestsService.editingTest = testsCB.SelectedItem as Tests;
+            TestsService.isImportingTest = false;
             MainClass.FrameVar.Navigate(new CreateEditTestPage());
         }
 

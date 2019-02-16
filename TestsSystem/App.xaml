@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:TestsSystem"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:theme="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit"
-             StartupUri="Pages/ImportTestPage.xaml">
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!-- Цвета -->
         <SolidColorBrush x:Key="BlueBrush" Color="#1E88E5"/>

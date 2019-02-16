@@ -4,65 +4,26 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TestsSystem.Pages"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
       mc:Ignorable="d" 
-      Width="800"
-      Height="450"
+      Width="500"
+      Height="250"
       Title="Импорт теста">
 
     <Grid>
         <StackPanel VerticalAlignment="Center">
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0 20">
-                <TextBlock Text="Название теста:" Style="{StaticResource hugeTBlStyle}" HorizontalAlignment="Center"/>
-                <TextBox Name="testNameTBox" Width="150" Margin="15 0" Style="{StaticResource blueTextBox}"/>
-
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="15 0 0 20">
-                <TextBlock Text="Время на тест:" Style="{StaticResource hugeTBlStyle}" HorizontalAlignment="Center"/>
-                <TextBox Name="passTimeTBox" Width="150" Margin="15 0" Style="{StaticResource blueTextBox}"/>
-                <TextBlock Text="Время на один вопрос:" Style="{StaticResource hugeTBlStyle}" HorizontalAlignment="Center"/>
-                <TextBox Name="questionTimeTBox" Width="150" Margin="15 0" Style="{StaticResource blueTextBox}"/>
-            </StackPanel>
-
-            <Grid Margin="15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Margin="10 0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <ListBox Height="150" Name="questionsLB" SelectionChanged="questionsLB_SelectionChanged">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding QuestionText}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 5" HorizontalAlignment="Center">
-                        <TextBox x:Name="editQuestionTBox" Style="{StaticResource blueTextBox}" Width="150"/>
-                        <Button Width="90" x:Name="editQuestionBut" Margin="5 0" Content="Изменить" Style="{StaticResource butStyle}"/>
-                        <Button Width="90" Style="{StaticResource butStyle}" Margin="5 0" Content="Удалить"/>
-                    </StackPanel>
-                </Grid>
-
-
-                <Grid Grid.Column="1" Margin="10 0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <ListBox Height="150" Name="optionsLB" SelectionChanged="questionsLB_SelectionChanged">
-                    </ListBox>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 5" HorizontalAlignment="Center">
-                        <TextBox x:Name="editOptionTBox" Style="{StaticResource blueTextBox}" Width="150"/>
-                        <Button Width="90" x:Name="editOptionBut" Margin="5 0" Content="Изменить" Style="{StaticResource butStyle}"/>
-                        <Button Width="90" Style="{StaticResource butStyle}" Margin="5 0" Content="Удалить"/>
-                    </StackPanel>
-                </Grid>
-            </Grid>
-            
+            <TextBlock Text="Документ может содержать название теста в первой строке и время на прохождение теста на второй строке (не обязательно)"
+                       Width="400"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       Style="{StaticResource mediumTBlStyle}"/>
+            <fa:ImageAwesome Foreground="{StaticResource BlueBrush}"
+                             Icon="Refresh"
+                             x:Name="spinnerIcon" 
+                             Visibility="Hidden"
+                             Spin="True" 
+                             SpinDuration="2"
+                             Width="100"/>
             <Button Style="{StaticResource butStyle}"
                     Content="Выбрать файл..."
                     Width="300"

@@ -26,6 +26,16 @@
                    VerticalAlignment="Center" 
                    HorizontalAlignment="Center"
                    Foreground="White"/>
+
+        <Button Style="{StaticResource backHomeButs}" 
+                x:Name="backToMenuBut"
+                Click="backToMenuBut_Click"
+                IsEnabled="False"
+                Content="Меню" 
+                HorizontalAlignment="Left"
+                Height="20"
+                Margin="20 0 0 0"
+                Width="100"/>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0">
             <Button Style="{StaticResource backHomeButs}" Content="Назад" Margin="5" Width="100" x:Name="backBut" Click="backBut_Click"/>
             <Button Style="{StaticResource backHomeButs}" Content="Выход" Width="100" x:Name="homeBut" Click="homeBut_Click"/>
